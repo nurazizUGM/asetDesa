@@ -1,0 +1,15 @@
+iAset - Sistem Manajemen Aset dan Inventaris
+
+Informasi Login :
+
+1. Administrator
+user	: admin
+pass	: admin
+
+2. Manager
+user	: manager
+pass	: 12345678
+
+2. Staf GA
+user	: staff
+pass	: 12345678

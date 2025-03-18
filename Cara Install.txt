@@ -1,0 +1,23 @@
+1. Buat Database di phpmyadmin dengan nama "aset"
+2. Import database aset.sql di folder database.
+3. Buat Folder aset di htdocs dan copy semua file yang ada di folder Script
+4. Untuk masuk menu website, Buka browser dan jalankan localhost/aset
+
+
+Mengganti URL QR Code Generator :
+=================================
+Buka file application/controllers/Aset.php
+Pada baris 89 :
+$url = 'http://localhost/aset/detail/'.$id_aset;
+Ganti localhost sesuai dengan URL anda.
+
+
+Cara Mengganti Logo & Background :
+==================================
+1. Background Login dan Dashbord.
+   ke folder : src/img/
+   Ganti gambar aset.jpg dan bg.jpg (Gambarnya saja yang diganti, nama dan ekstensi tetap sama)
+2. Logo Login dan Navbar
+   ke folder : src/backend/dist/img/
+   Ganti gambar iaset.png (Gambarnya saja yang diganti, nama dan ekstensi tetap sama)
+3. Terakhir clear cache browser
