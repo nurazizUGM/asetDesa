@@ -121,7 +121,12 @@
             <p>Dashboard</p>
           </a>
         </li>
-        
+        <li class="nav-item has-treeview">
+          <a href="<?=base_url('statistik')?>" class="nav-link <?=isset($active_menu_statistik)?$active_menu_statistik:'' ?>">
+            <i class="nav-icon fas fa-chart-pie"></i>
+            <p>Statistik</p>
+          </a>
+        </li>
         <li class="nav-item has-treeview <?=isset($active_menu_open)?$active_menu_open:'' ?>">
           <a href="#" class="nav-link <?=isset($active_menu_aset)?$active_menu_aset:'' ?>">
             <i class="nav-icon fa fa-building"></i>
@@ -144,11 +149,67 @@
             </li>
           </ul>
         </li>
+        <li class="nav-item has-treeview <?=isset($active_menu_kp)?$active_menu_kp:'' ?>">
+          <a href="#" class="nav-link <?=isset($active_menu_kpn)?$active_menu_kpn:'' ?>">
+            <i class="nav-icon fa fa-balance-scale"></i>
+            <p>Keputusan Pengadaan
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="<?=base_url('kriteria')?>" class="nav-link <?=isset($active_menu_dk)?$active_menu_dk:'' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Data Kriteria</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?=base_url('data_aset')?>" class="nav-link <?=isset($active_menu_da)?$active_menu_da:'' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Data Aset</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?=base_url('spk')?>" class="nav-link <?=isset($active_menu_spk)?$active_menu_spk:'' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Nilai / Proses SPK</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item has-treeview <?=isset($active_menu_open_pnd)?$active_menu_open_pnd:'' ?>">
+          <a href="#" class="nav-link <?=isset($active_pengadaan)?$active_pengadaan:'' ?>">
+            <i class="nav-icon fas fa-luggage-cart"></i>
+            <p>Pengadaan
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="<?=base_url('pengajuan')?>" class="nav-link <?=isset($active_menu_pnd)?$active_menu_pnd:'' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Pengajuan</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?=base_url('pengadaan')?>" class="nav-link <?=isset($active_menu_pgd)?$active_menu_pgd:'' ?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Lihat Data</p>
+              </a>
+            </li>
+          </ul>
+        </li>
 
         <li class="nav-item has-treeview">
           <a href="<?=base_url('monitoring')?>" class="nav-link <?=isset($active_menu_mt)?$active_menu_mt:'' ?>">
             <i class="nav-icon fa fa-heartbeat"></i>
             <p>Monitoring</p>
+          </a>
+        </li>
+        <li class="nav-item has-treeview">
+          <a href="<?=base_url('penyusutan')?>" class="nav-link <?=isset($active_menu_pys)?$active_menu_pys:'' ?>">
+            <i class="nav-icon fas fa-chart-area"></i>
+            <p>Penyusutan</p>
           </a>
         </li>
         <li class="nav-item has-treeview">

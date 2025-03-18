@@ -27,40 +27,63 @@ SET time_zone = "+00:00";
 -- Struktur dari tabel `asets`
 --
 
+DROP TABLE IF EXISTS `asets`;
 CREATE TABLE `asets` (
-  `id_aset` varchar(128) NOT NULL,
-  `kode_aset` varchar(128) DEFAULT NULL,
-  `id_barang` int(11) DEFAULT NULL,
-  `id_lokasi` int(11) DEFAULT NULL,
-  `volume` int(11) DEFAULT NULL,
-  `satuan` varchar(50) DEFAULT NULL,
-  `harga` double DEFAULT NULL,
-  `total_harga` double DEFAULT NULL,
-  `kondisi` varchar(128) DEFAULT 'Baik',
-  `status_aset` varchar(50) DEFAULT NULL,
-  `umur_ekonomis` int(11) DEFAULT NULL,
-  `jenis_bantuan` varchar(128) DEFAULT NULL,
-  `jenis_aset` varchar(128) DEFAULT 'Berwujud',
-  `qr_code` varchar(128) DEFAULT NULL
+  `id_aset` VARCHAR(128) NOT NULL PRIMARY KEY,
+  `kode_aset` VARCHAR(128) DEFAULT NULL,
+  `id_barang` INT(11) DEFAULT NULL,
+  `id_lokasi` INT(11) DEFAULT NULL,
+  `kategori_aset` ENUM('Tanah', 'Peralatan & Mesin', 'Gedung & Bangunan') NOT NULL,
+  `kondisi` VARCHAR(128) DEFAULT 'Baik',
+  `status_aset` VARCHAR(50) DEFAULT NULL,
+  `umur_ekonomis` INT(11) DEFAULT NULL,
+  `jenis_bantuan` VARCHAR(128) DEFAULT NULL,
+  `jenis_aset` VARCHAR(128) DEFAULT 'Berwujud',
+  `qr_code` VARCHAR(128) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
+CREATE TABLE `aset_tanah` (
+  `id_aset` VARCHAR(128) NOT NULL PRIMARY KEY,
+  `luas_m2` DOUBLE NOT NULL,
+  `alamat` TEXT NOT NULL,
+  `harga_tanah_per_m` DOUBLE NOT NULL,
+  `harga_tanah` DOUBLE NOT NULL,
+  `harga_sewa_per_m` DOUBLE DEFAULT NULL,
+  `harga_sewa_tahunan` DOUBLE DEFAULT NULL,
+  `jarak_sumber_air` INT DEFAULT NULL,
+  `jarak_jalan_utama` INT DEFAULT NULL,
+  FOREIGN KEY (`id_aset`) REFERENCES `asets`(`id_aset`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `aset_peralatan_mesin` (
+  `id_aset` VARCHAR(128) NOT NULL PRIMARY KEY,
+  `merek_type` VARCHAR(128) NOT NULL,
+  `bahan` VARCHAR(128) DEFAULT NULL,
+  `tahun_pembelian` YEAR NOT NULL,
+  `nilai_perolehan` DOUBLE NOT NULL,
+  FOREIGN KEY (`id_aset`) REFERENCES `asets`(`id_aset`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `aset_gedung_bangunan` (
+  `id_aset` VARCHAR(128) NOT NULL PRIMARY KEY,
+  `tahun_perolehan` YEAR NOT NULL,
+  `nilai_perolehan_gedung` DOUBLE NOT NULL,
+  FOREIGN KEY (`id_aset`) REFERENCES `asets`(`id_aset`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `asets`
 --
 
-INSERT INTO `asets` (`id_aset`, `kode_aset`, `id_barang`, `id_lokasi`, `volume`, `satuan`, `harga`, `total_harga`, `kondisi`, `status_aset`, `umur_ekonomis`, `jenis_bantuan`, `jenis_aset`, `qr_code`) VALUES
-('026c072e8a1c40e2816730c84ab34108', '0001/GDG/2020', 3, 3, 1, 'Buah', 150000000, 150000000, 'Renovasi', 'Aktif', 20, 'Pemerintah', 'Berwujud', 'e9b1e9b2984045898130f1a1a4d99b36.png'),
-('0ce0995696174904947b1f747e7b89c6', '0001/KOM/2020', 9, 1, 2, 'Unit', 2000000, 4000000, 'Baik', 'Aktif', 5, 'Pribadi', 'Berwujud', 'baceba21c4924239b76da086a7dd246b.png'),
-('3950c450aec441c08c18e32be66c9268', '0002/GDG/2021', 2, 2, 1, 'Unit', 200000000, 200000000, 'Baik', 'Aktif', 5, 'Yayasan', 'Berwujud', '90a28457eb9a4eef8d6241899185520b.png'),
-('44855e0b53554358a7cb65512cb94719', '0003/FUR/2020', 1, 1, 20, 'Unit', 90000000, 1800000000, 'Baik', 'Aktif', 10, 'Pribadi', 'Berwujud', '764ac8d6ffa54f2a9fe093f6e96d80ff.png'),
-('4eb4f53d68dc475c980376d4f8da4a99', '0002/FUR/2020', 5, 1, 20, 'Unit', 80000000, 1600000000, 'Baik', 'Aktif', 10, 'Pribadi', 'Berwujud', '8973dfdc58dd4649951e8c96a7879a29.png'),
-('5a60376b26504c21af7098b72f3b222a', '0001/ELE/2020', 12, 4, 1, 'Unit', 5000000, 5000000, 'Baik', 'Aktif', 5, 'Pribadi', 'Berwujud', '1ca18e5d52c24a108cdfafb4f1d6d435.png'),
-('b644eaa500124fba98fe1db666cf6454', '0001/FUR/2020', 6, 1, 10, 'Unit', 60000000, 600000000, 'Baik', 'Aktif', 10, 'Pribadi', 'Berwujud', 'f87c557a7d6142d58adf556e6cc595d0.png'),
-('d23fe7f6ae924f5e834ceac40417319e', '0003/GDG/2020', 2, 2, 1, 'Lokal', 300000000, 300000000, 'Baik', 'Aktif', 5, 'Yayasan', 'Berwujud', '63b0ce01ae0542bfbe832db01d6a3bca.png'),
-('d4e57484a2af4123a1d3967150c79fed', '0003/KOM/2020', 7, 2, 2, 'Unit', 16000000, 32000000, 'Baik', 'Aktif', 5, 'Pribadi', 'Berwujud', 'c8a619df9e694174aaaabe63c17df3c0.png'),
-('d656e1d8a61f40daa10ec697403a6e81', '0003/ELE/2020', 10, 1, 3, 'Unit', 1500000, 4500000, 'Baik', 'Aktif', 5, 'Pribadi', 'Berwujud', '67279b01b7d54a60800c0abec596cee4.png'),
-('e30a1be2639c443fa9012af62a72ad78', '0002/KOM/2020', 8, 1, 10, 'Unit', 50000000, 500000000, 'Baik', 'Aktif', 5, 'Pribadi', 'Berwujud', 'c507e9b658b84d5c8fa1124bbb5e91de.png'),
-('fa47c767f6c9461b8fb518876d4114bf', '0002/ELE/2019', 11, 1, 2, 'Unit', 10000000, 20000000, 'Baik', 'Aktif', 5, 'Pribadi', 'Berwujud', '6775efb116224cbeb5fdfa5c8845866a.png');
+INSERT INTO asets (id_aset, kode_aset, id_barang, id_lokasi, kategori_aset, kondisi) 
+VALUES ('AST001', 'T-001', 1, 2, 'Tanah', 'Baik');
+
+INSERT INTO aset_tanah (id_aset, luas_m2, alamat, harga_tanah_per_m, harga_tanah, harga_sewa_per_m, harga_sewa_tahunan, jarak_sumber_air, jarak_jalan_utama) 
+VALUES ('AST001', 500, 'Jl. Merdeka No. 10', 2000000, 1000000000, 50000, 25000000, 50, 200);
 
 -- --------------------------------------------------------
 
