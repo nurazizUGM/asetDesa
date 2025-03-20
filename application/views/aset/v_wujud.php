@@ -117,9 +117,7 @@
                         <th>No.</th>
                         <th>Kode Aset</th>
                         <th>Nama</th>
-                        <th>Volume</th>
-                        <th>Nilai Perolehan</th>
-                        <th>Harga Sewa</th>
+                        <th>Tahun Pengadaan</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -129,9 +127,7 @@
                         <td><?=$no++;?></td>
                         <td><?=$row['kode_aset'];?></td>
                         <td><?=$row['nama_aset'];?></td>
-                        <td text-align="center"><?=$row['volume'];?></td>
-                        <td><?=rupiah($row['harga']);?></td>
-                        <td><?=rupiah($row['sewa']);?></td>
+                        <td><?=$row['tahun_pengadaan'];?></td>
                         <td>
                             <a href="<?=base_url('aset_wujud/detail/'.$row['id_aset'])?>" class="btn btn-success btn-sm">
                                 <i class="fas fa-eye"></i>
@@ -151,9 +147,7 @@
                         <th>No.</th>
                         <th>Kode Aset</th>
                         <th>Nama</th>
-                        <th>Volume</th>
-                        <th>Nilai Perolehan</th>
-                        <th>Harga Sewa</th>
+                        <th>Tahun Pengadaan</th>
                         <th>Aksi</th>
                     </tr>
                 </tfoot>
