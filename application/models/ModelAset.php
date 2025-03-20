@@ -45,6 +45,19 @@ class ModelAset extends CI_Model
         return $query;
     }
 
+    public function storeAsetMany($data)
+    {
+        $this->db->trans_start();
+        foreach ($data as $aset) {
+            $this->storeAset($aset['data'], $aset['detail']);
+        }
+        $this->db->trans_complete();
+        if ($this->db->trans_status() === FALSE) {
+            $error = $this->db->error();
+            throw new Exception($error['message']);
+        }
+    }
+
     public function searchAset($bar)
     {
         $this->db->select('*');

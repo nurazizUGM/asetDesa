@@ -1,4 +1,7 @@
 <?php
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -380,6 +383,261 @@ class Aset extends CI_Controller
         $query = $this->ma->searchAset($bar, 'nama_barang');
 
         echo json_encode($query);
+    }
+
+    public function parse_tanah(Spreadsheet $spreadsheet)
+    {
+        $sheet = $spreadsheet->getSheetByName('INVENTARIS TANAH');
+        if (!$sheet) {
+            $this->session->set_flashdata('gagal', 'Sheet "INVENTARIS TANAH" tidak ditemukan.');
+            redirect(base_url('aset_wujud'));
+        }
+
+        $config['imagedir'] = './src/img/qrcode/';
+        $this->ciqrcode->initialize($config);
+
+        $data = [];
+        $row = 8;
+        while (true) {
+            $row++;
+            if (!$sheet->getCell("A" . $row)->getValue()) {
+                break;
+            }
+
+            $nama = $sheet->getCell("B" . $row)->getValue();
+            $kode1 = $sheet->getCell("C" . $row)->getValue();
+            $kode2 = $sheet->getCell("D" . $row)->getValue();
+            $kode3 = $sheet->getCell("E" . $row)->getValue();
+            $kode4 = $sheet->getCell("F" . $row)->getValue();
+            $nup = $sheet->getCell("G" . $row)->getValue();
+
+            $luas = $sheet->getCell("H" . $row)->getValue();
+            $alamat = $sheet->getCell("I" . $row)->getValue();
+            $tahun_pengadaan = $sheet->getCell("J" . $row)->getValue();
+            $kegunaan = $sheet->getCell("K" . $row)->getValue();
+
+            try {
+                $koordinat = $sheet->getCell("L" . $row)->getValue();
+                list($latitude, $longitude) = array_map('floatval', explode(', ', $koordinat));
+            } catch (\Exception $e) {
+                $latitude = $longitude = null;
+            }
+
+            $harga_satuan = $sheet->getCell("M" . $row)->getCalculatedValue();
+            $harga_total = $sheet->getCell("N" . $row)->getCalculatedValue();
+            $harga_sewa_satuan = $sheet->getCell("O" . $row)->getCalculatedValue();
+            $harga_sewa_total = $sheet->getCell("P" . $row)->getCalculatedValue();
+            $jarak_sumber_air = $sheet->getCell("Q" . $row)->getValue();
+            $jarak_jalan_utama = $sheet->getCell("R" . $row)->getValue();
+
+            // Buat UUID untuk ID Aset
+            $id_aset = str_replace('-', '', $this->uuid->v4());
+            $image_name = $id_aset . '.png';
+
+            // generate QR Code
+            $kode_aset = "$kode1$kode2$kode3$kode4/$nup/$tahun_pengadaan";
+
+
+            $url = base_url('aset/detail/' . $id_aset);
+
+            // Konfigurasi QR Code
+            $params['data'] = $url;
+            $params['level'] = 'H';
+            $params['size'] = 10;
+            $params['savename'] = FCPATH . $config['imagedir'] . $image_name;
+            $this->ciqrcode->generate($params);
+
+            $rowData = [
+                'id_aset' => $id_aset,
+                'nama_aset' => $nama,
+                'kode_aset' => $kode_aset,
+                'nup_aset' => $nup,
+                'kategori_aset' => ModelAset::KATEGORI_TANAH,
+                'tahun_pengadaan' => $tahun_pengadaan,
+                'qr_code' => $image_name
+            ];
+
+            $detail = [
+                'id_aset' => $id_aset,
+                'luas' => $luas,
+                'alamat' => $alamat,
+                'kegunaan' => $kegunaan,
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+                'harga_satuan' => $harga_satuan,
+                'harga_total' => $harga_total,
+                'harga_sewa_satuan' => $harga_sewa_satuan,
+                'harga_sewa_total' => $harga_sewa_total,
+                'jarak_sumber_air' => $jarak_sumber_air,
+                'jarak_jalan_utama' => $jarak_jalan_utama
+            ];
+
+            $data[] = ['data' => $rowData, 'detail' => $detail];
+        }
+
+        return $data;
+    }
+
+    public function parse_peralatan(Spreadsheet $spreadsheet)
+    {
+        $sheet = $spreadsheet->getSheetByName('INVENTARIS PERALATAN DAN MESIN');
+        if (!$sheet) {
+            $this->session->set_flashdata('gagal', 'Sheet "INVENTARIS PERALATAN DAN MESIN" tidak ditemukan.');
+            redirect(base_url('aset_wujud'));
+        }
+
+        $config['imagedir'] = './src/img/qrcode/';
+        $this->ciqrcode->initialize($config);
+
+        $data = [];
+        $row = 8;
+        while (true) {
+            $row++;
+            if (!$sheet->getCell("A" . $row)->getValue()) {
+                break;
+            }
+
+            $nama = $sheet->getCell("B" . $row)->getValue();
+            $kode1 = $sheet->getCell("C" . $row)->getValue();
+            $kode2 = $sheet->getCell("D" . $row)->getValue();
+            $kode3 = $sheet->getCell("E" . $row)->getValue();
+            $kode4 = $sheet->getCell("F" . $row)->getValue();
+            $nup = $sheet->getCell("G" . $row)->getValue();
+            
+            $merk = $sheet->getCell("H" . $row)->getValue();
+            $bahan = $sheet->getCell("I" . $row)->getValue();
+            $tahun_pengadaan = $sheet->getCell("J" . $row)->getValue();
+            $perolehan = $sheet->getCell("K" . $row)->getValue();
+
+            // Buat UUID untuk ID Aset
+            $id_aset = str_replace('-', '', $this->uuid->v4());
+            $image_name = $id_aset . '.png';
+
+            // generate QR Code
+            $kode_aset = "$kode1$kode2$kode3$kode4/$nup/$tahun_pengadaan";
+
+
+            $url = base_url('aset/detail/' . $id_aset);
+
+            // Konfigurasi QR Code
+            $params['data'] = $url;
+            $params['level'] = 'H';
+            $params['size'] = 10;
+            $params['savename'] = FCPATH . $config['imagedir'] . $image_name;
+            $this->ciqrcode->generate($params);
+
+            $rowData = [
+                'id_aset' => $id_aset,
+                'nama_aset' => $nama,
+                'kode_aset' => $kode_aset,
+                'nup_aset' => $nup,
+                'kategori_aset' => ModelAset::KATEGORI_PERALATAN,
+                'tahun_pengadaan' => $tahun_pengadaan,
+                'qr_code' => $image_name
+            ];
+
+            $detail = [
+                'id_aset' => $id_aset,
+                'merk' => $merk,
+                'bahan' => $bahan,
+                'perolehan' => $perolehan
+            ];
+
+            $data[] = ['data' => $rowData, 'detail' => $detail];
+        }
+
+        return $data;
+    }
+
+    public function parse_bangunan(Spreadsheet $spreadsheet)
+    {
+        $sheet = $spreadsheet->getSheetByName('INVENTARIS GEDUNG DAN BANGUNAN');
+        if (!$sheet) {
+            $this->session->set_flashdata('gagal', 'Sheet "INVENTARIS GEDUNG DAN BANGUNAN" tidak ditemukan.');
+            redirect(base_url('aset_wujud'));
+        }
+
+        $config['imagedir'] = './src/img/qrcode/';
+        $this->ciqrcode->initialize($config);
+
+        $data = [];
+        $row = 8;
+        while (true) {
+            $row++;
+            if (!$sheet->getCell("A" . $row)->getValue()) {
+                break;
+            }
+
+            $nama = $sheet->getCell("B" . $row)->getValue();
+            $kode1 = $sheet->getCell("C" . $row)->getValue();
+            $kode2 = $sheet->getCell("D" . $row)->getValue();
+            $kode3 = $sheet->getCell("E" . $row)->getValue();
+            $kode4 = $sheet->getCell("F" . $row)->getValue();
+            $nup = $sheet->getCell("G" . $row)->getValue();
+
+            $tahun_pengadaan = $sheet->getCell("H" . $row)->getValue();
+            $perolehan = $sheet->getCell("I" . $row)->getValue();
+
+            // Buat UUID untuk ID Aset
+            $id_aset = str_replace('-', '', $this->uuid->v4());
+            $image_name = $id_aset . '.png';
+
+            // generate QR Code
+            $kode_aset = "$kode1$kode2$kode3$kode4/$nup/$tahun_pengadaan";
+
+
+            $url = base_url('aset/detail/' . $id_aset);
+
+            // Konfigurasi QR Code
+            $params['data'] = $url;
+            $params['level'] = 'H';
+            $params['size'] = 10;
+            $params['savename'] = FCPATH . $config['imagedir'] . $image_name;
+            $this->ciqrcode->generate($params);
+
+            $rowData = [
+                'id_aset' => $id_aset,
+                'nama_aset' => $nama,
+                'kode_aset' => $kode_aset,
+                'nup_aset' => $nup,
+                'kategori_aset' => ModelAset::KATEGORI_BANGUNAN,
+                'tahun_pengadaan' => $tahun_pengadaan,
+                'qr_code' => $image_name
+            ];
+
+            $detail = [
+                'id_aset' => $id_aset,
+                'perolehan' => $perolehan
+            ];
+
+            $data[] = ['data' => $rowData, 'detail' => $detail];
+        }
+
+        return $data;
+    }
+
+    public function import_excel()
+    {
+        $this->load->library('upload');
+        $file = $_FILES['fileExcel']['tmp_name'];
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($file);
+
+        try {
+            $data_tanah = $this->parse_tanah($spreadsheet);
+            $data_peralatan = $this->parse_peralatan($spreadsheet);
+            $data_bangunan = $this->parse_bangunan($spreadsheet);
+            $data = array_merge($data_tanah, $data_peralatan, $data_bangunan);
+            $this->ma->storeAsetMany($data);
+
+            // Process the $data array as needed
+            $this->session->set_flashdata('sukses', 'Data berhasil diimpor.');
+        } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
+            $this->session->set_flashdata('gagal', 'Terjadi kesalahan saat membaca file: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            $this->session->set_flashdata('gagal', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+
+        redirect(base_url('aset_wujud'));
     }
 }
 

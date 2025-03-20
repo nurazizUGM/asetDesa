@@ -45,7 +45,7 @@ $route['users/ubah'] = 'User/updateUser';
 $route['users/ubah_password'] = 'User/updatePassword';
 
 //Aset
-$route['aset_wujud/import_excel'] = 'Aset_wujud/import_excel';
+$route['aset_wujud/import_excel'] = 'Aset/import_excel';
 $route['aset_wujud'] = 'Aset/index';
 $route['aset_wujud/tambah'] = 'Aset/tambahAset';
 $route['aset_wujud/cari'] = 'Aset/cariAset';
