@@ -73,7 +73,7 @@
 </div>
 
     <div class="card-body">
-        <form action="<?=base_url('aset_wujud/filter')?>" method="POST">
+        <!-- <form action="<?=base_url('aset_wujud/filter')?>" method="POST">
             <div class="row">
                 <div class="col-md-3">
                     <select name="id_kategori" class="form-control" required>
@@ -108,7 +108,7 @@
                     <button type="reset" class="btn btn-block btn-outline-danger">Reset</button>
                 </div>
             </div>
-        </form>
+        </form> -->
         <br/>
         <div class="table-responsive">
             <table id="example1" class="table table-bordered table-striped">
