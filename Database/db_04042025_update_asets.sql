@@ -1,0 +1,1 @@
+ALTER TABLE `asets` ADD `deleted_at` DATETIME NULL DEFAULT NULL;

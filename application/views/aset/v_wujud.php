@@ -73,32 +73,22 @@
 </div>
 
     <div class="card-body">
-        <!-- <form action="<?=base_url('aset_wujud/filter')?>" method="POST">
+        <form action="" method="GET">
             <div class="row">
                 <div class="col-md-3">
-                    <select name="id_kategori" class="form-control" required>
+                    <select name="kategori" class="form-control" value="<?= $kategori ?>">
                         <option value="">- Pilih Kategori -</option>
-                        <?php foreach ($kategori as $row): ?>
-                            <option value="<?=$row['id_kategori'];?>">
-                                <?=$row['kode_kategori'];?> - <?=$row['nama_kategori'];?>
-                            </option>
-                        <?php endforeach ?>
+                        <option value="<?= ModelAset::KATEGORI_TANAH ?>"><?= ModelAset::KATEGORI_TANAH ?></option>
+                        <option value="<?= ModelAset::KATEGORI_PERALATAN ?>"><?= ModelAset::KATEGORI_PERALATAN ?></option>
+                        <option value="<?= ModelAset::KATEGORI_BANGUNAN ?>"><?= ModelAset::KATEGORI_BANGUNAN ?></option>
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <select name="tahun_perolehan" class="form-control" required>
-                        <option value="">- Tahun Perolehan -</option>
+                    <select name="tahun_pengadaan" class="form-control" value="<?= $tahun_pengadaan ?>">
+                        <option value="">- Tahun Pengadaan -</option>
                         <?php for ($i = 2010; $i <= date('Y'); $i++): ?>
                             <option value="<?=$i;?>"><?=$i;?></option>
                         <?php endfor; ?>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <select name="kondisi" class="form-control" required>
-                        <option value="">- Kondisi -</option>
-                        <option value="Baik">Baik</option>
-                        <option value="Renovasi">Renovasi</option>
-                        <option value="Rusak">Rusak</option>
                     </select>
                 </div>
                 <div class="col-md-1">
@@ -108,7 +98,7 @@
                     <button type="reset" class="btn btn-block btn-outline-danger">Reset</button>
                 </div>
             </div>
-        </form> -->
+        </form>
         <br/>
         <div class="table-responsive">
             <table id="example1" class="table table-bordered table-striped">
@@ -116,6 +106,7 @@
                     <tr>
                         <th>No.</th>
                         <th>Kode Aset</th>
+                        <th>Kategori</th>
                         <th>Nama</th>
                         <th>Tahun Pengadaan</th>
                         <th>Aksi</th>
@@ -126,6 +117,7 @@
                     <tr>
                         <td><?=$no++;?></td>
                         <td><?=$row['kode_aset'];?></td>
+                        <td><?=$row['kategori_aset'];?></td>
                         <td><?=$row['nama_aset'];?></td>
                         <td><?=$row['tahun_pengadaan'];?></td>
                         <td>
@@ -146,6 +138,7 @@
                     <tr>
                         <th>No.</th>
                         <th>Kode Aset</th>
+                        <th>Kategori</th>
                         <th>Nama</th>
                         <th>Tahun Pengadaan</th>
                         <th>Aksi</th>

@@ -41,13 +41,17 @@ class Aset extends CI_Controller
 
     public function index()
     {
+        $kategori = $this->input->get('kategori');
+        $tahun_pengadaan = $this->input->get('tahun_pengadaan');
+        
         $data = array(
             'title' => 'Aset Berwujud',
             'active_menu_open' => 'menu-open',
             'active_menu_aset' => 'active',
             'active_menu_wujud' => 'active',
-            'aset' => $this->ma->getAsetWujud(),
-            'kategori' => $this->mk->getKategoriBarang()
+            'aset' => $this->ma->getAsetWujud($kategori, $tahun_pengadaan),
+            'kategori' => $kategori,
+            'tahun_pengadaan' => $tahun_pengadaan,
         );
         $this->load->view('layouts/header', $data);
         $this->load->view('aset/v_wujud', $data);
@@ -62,7 +66,6 @@ class Aset extends CI_Controller
             'active_menu_aset' => 'active',
             'active_menu_wujud' => 'active',
             'aset' => $this->ma->getAsetWujud()
-
         );
         $this->load->view('layouts/header', $data);
         $this->load->view('aset/c_wujud', $data);
@@ -289,13 +292,8 @@ class Aset extends CI_Controller
     public function hapusAset($id_aset)
     {
         $id_aset = $this->uri->segment(3);
-
         $this->db->where('id_aset', $id_aset);
-        $get_image_file = $this->db->get('asets')->row();
-        @unlink('src/img/qrcode/' . $get_image_file->qr_code);
-
-        $this->db->where('id_aset', $id_aset);
-        $this->db->delete('asets');
+        $this->db->update('asets', array('deleted_at' => date('Y-m-d H:i:s')));
         $this->session->set_flashdata('sukses', 'Dihapus');
         redirect('aset_wujud');
     }
@@ -326,13 +324,17 @@ class Aset extends CI_Controller
 
     public function dihapuskanAset()
     {
+        $kategori = $this->input->get('kategori');
+        $tgl_penghapusan = $this->input->get('tgl_penghapusan');
+        
         $data = array(
             'title' => 'Aset Dihapuskan',
             'active_menu_open' => 'menu-open',
             'active_menu_aset' => 'active',
             'active_menu_hapuskan' => 'active',
-            'kategori' => $this->mk->getKategoriBarang(),
-            'aset' => $this->ma->getAsetDihapuskan()
+            'aset' => $this->ma->getAsetDihapuskan($kategori, $tgl_penghapusan),
+            'kategori' => $kategori,
+            'tgl_penghapusan' => $tgl_penghapusan,
         );
         $this->load->view('layouts/header', $data);
         $this->load->view('aset/v_dihapuskan', $data);

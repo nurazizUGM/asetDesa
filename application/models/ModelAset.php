@@ -8,21 +8,39 @@ class ModelAset extends CI_Model
     const KATEGORI_PERALATAN = "Peralatan & Mesin";
     const KATEGORI_BANGUNAN = "Gedung & Bangunan";
 
-    public function getAsetWujud()
+    public function getAsetWujud($kategori = '', $tahun_pengadaan = '')
     {
         $this->db->select('*');
         $this->db->from('asets');
+        $this->db->where('deleted_at IS NULL');
+
+        if ($kategori != '') {
+            $this->db->where('kategori_aset', $kategori);
+        }
+
+        if ($tahun_pengadaan != '') {
+            $this->db->where('tahun_pengadaan', $tahun_pengadaan);
+        }
+
         $query = $this->db->get();
         return $query->result_array();
     }
 
 
-    public function getAsetDihapuskan()
+    public function getAsetDihapuskan($kategori, $tgl_penghapusan)
     {
         $this->db->select('*');
-        $this->db->from('penghapusan a');
-        $this->db->join('asets b', 'b.id_aset = a.id_aset');
-        $this->db->join('barang c', 'c.id_barang = b.id_barang');
+        $this->db->from('asets');
+        $this->db->where('deleted_at IS NOT NULL');
+
+        if ($kategori != '') {
+            $this->db->where('kategori_aset', $kategori);
+        }
+
+        if ($tgl_penghapusan != '') {
+            $this->db->where('YEAR(`deleted_at`)', $tgl_penghapusan);
+        }
+
         $query = $this->db->get();
         return $query->result_array();
     }

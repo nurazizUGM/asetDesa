@@ -38,18 +38,18 @@
             </div>
         </div>
           <div class="card-body">
-             <form action="<?=base_url('aset_dihapuskan/filter')?>" method="POST">
+             <form action="" method="GET">
               <div class="row">
                   <div class="col-4">
-                    <select name="id_kategori" class="form-control" required>
-                      <option value="">- Pilih Kode Aset --</option>
-                      <?php foreach ($kategori as $row): ?>
-                        <option value="<?=$row['id_kategori'];?>"><?=$row['kode_kategori'];?> - <?=$row['nama_kategori'];?></option>
-                      <?php endforeach ?>      
+                    <select name="kategori" class="form-control" value="<?= $kategori ?>">
+                      <option value="">- Pilih Kategori Aset --</option>
+                        <option value="<?= ModelAset::KATEGORI_TANAH ?>"><?= ModelAset::KATEGORI_TANAH ?></option>
+                        <option value="<?= ModelAset::KATEGORI_PERALATAN ?>"><?= ModelAset::KATEGORI_PERALATAN ?></option>
+                        <option value="<?= ModelAset::KATEGORI_BANGUNAN ?>"><?= ModelAset::KATEGORI_BANGUNAN ?></option>
                     </select>
                   </div>
                   <div class="col-4">
-                    <select name="tgl_penghapusan" class="form-control" required>
+                    <select name="tgl_penghapusan" class="form-control" value="<?= $tgl_penghapusan ?>">
                         <option value="">- Pilih Tahun Penghapusan --</option>
                         <?php 
                         for($i = 2015 ; $i <= date('Y'); $i++){
@@ -71,41 +71,35 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>No.</th>
-                  <th>Kode Aset</th>
-                  <th>Nama</th>
-                  <th>Volume</th>
-                  <th>Nilai Aset</th>
-                  <th>Status Aset</th>
-                  <th>Aksi</th>
+                    <th>No.</th>
+                    <th>Kode Aset</th>
+                    <th>Nama</th>
+                    <th>Tahun Pengadaan</th>
+                    <th>Aksi</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php $no=1; foreach ($aset as $row): ?>               
                 <tr>
-                  <td><?=$no++;?></td>
-                  <td><?=$row['kode_aset'];?></td>
-                  <td><?=$row['nama_barang'];?></td>
-                  <td><?=$row['jumlah'];?></td>
-                  <td><?=rupiah($row['harga']);?></td>
-                  <td><?=$row['status'];?></td>
-                  <td>
-                    <a href="<?=base_url('aset_dihapuskan/detail/'.$row['id_aset'])?>" class="btn btn-success btn-sm">
-                      <i class="fas fa-eye"></i>
-                    </a>
-                  </td>
+                    <td><?=$no++;?></td>
+                    <td><?=$row['kode_aset'];?></td>
+                    <td><?=$row['nama_aset'];?></td>
+                    <td><?=$row['tahun_pengadaan'];?></td>
+                    <td>
+                        <a href="<?=base_url('aset_dihapuskan/detail/'.$row['id_aset'])?>" class="btn btn-success btn-sm">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </td>
                 </tr>
                 <?php endforeach ?>
                 </tbody>
                 <tfoot>
                 <tr>
-                  <th>No.</th>
-                  <th>Kode Aset</th>
-                  <th>Nama</th>
-                  <th>Volume</th>
-                  <th>Nilai Aset</th>
-                  <th>Status Aset</th>
-                  <th>Aksi</th>
+                <th>No.</th>
+                    <th>Kode Aset</th>
+                    <th>Nama</th>
+                    <th>Tahun Pengadaan</th>
+                    <th>Aksi</th>
                 </tr>
                 </tfoot>
               </table>
