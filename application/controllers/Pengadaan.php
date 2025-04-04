@@ -325,7 +325,6 @@ class Pengadaan extends CI_Controller {
 			'active_menu_open_pnd' => 'menu-open',
 			'active_pengadaan' => 'active',
 			'active_menu_pgd' => 'active',
-			'lokasi' => $this->ml->getLokasi(),
 			'item' => $this->mp->getFilterPengadaanAset($id_lokasi,$tahun_pengadaan) 
 		);
 
