@@ -113,8 +113,8 @@ $route['laporan/export_aset/(:any)'] = 'Laporan/export_aset/(:any)';
 //Laporan Penghapusan
 $route['laporan/penghapusan'] = 'Laporan/penghapusan';
 $route['laporan/search_penghapusan'] = 'Laporan/searchPenghapusan';
-$route['laporan/print_penghapusan/(:any)/(:any)'] = 'Laporan/printPenghapusan/(:any)/(:any)';
-$route['laporan/export_penghapusan/(:any)/(:any)'] = 'Laporan/export_penghapusan/(:any)/(:any)';
+$route['laporan/print_penghapusan/(:any)'] = 'Laporan/printPenghapusan/(:any)';
+$route['laporan/export_penghapusan/(:any)'] = 'Laporan/export_penghapusan/(:any)';
 //Laporan QR Code
 $route['laporan/qr_code'] = 'Laporan/qrcodeAset';
 $route['laporan/print_qrcode'] = 'Laporan/printQrcode';

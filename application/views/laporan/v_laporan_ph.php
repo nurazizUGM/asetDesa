@@ -42,14 +42,6 @@
               <form action="<?=base_url('laporan/search_penghapusan')?>" method="post">
                 <div class="row">
                     <div class="col-4">
-                        <select name="id_lokasi" class="form-control" required>
-                          <option value="">- Lokasi Aset --</option>
-                          <?php foreach ($lokasi as $row): ?>
-                            <option value="<?=$row['id_lokasi'];?>"><?=$row['nama_lokasi'];?></option>
-                          <?php endforeach ?>                              
-                        </select>
-                    </div>
-                    <div class="col-4">
                       <select name="tahun_perolehan" class="form-control" required>
                         <option value="">- Tahun Perolehan --</option>
                         <?php 

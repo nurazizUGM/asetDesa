@@ -114,7 +114,6 @@ class Laporan extends CI_Controller {
 			'active_menu_lp' => 'menu-open',
 			'active_menu_lpr' => 'active',
 			'active_menu_php' => 'active',
-			'lokasi' => $this->ml->getLokasi()  
 		);
 		$this->load->view('layouts/header',$data);
 		$this->load->view('laporan/v_laporan_ph',$data);
@@ -123,7 +122,6 @@ class Laporan extends CI_Controller {
 
 	public function searchPenghapusan()
 	{
-		$id_lokasi = $this->input->post('id_lokasi');
 		$tahun_perolehan = $this->input->post('tahun_perolehan');
 
 		$data = array(
@@ -131,9 +129,7 @@ class Laporan extends CI_Controller {
 			'active_menu_lp' => 'menu-open',
 			'active_menu_lpr' => 'active',
 			'active_menu_php' => 'active',
-			'lokasi' => $this->ml->getLokasi(),
-			'lok' => $this->ml->getLokasiId($id_lokasi),
-			'aset' => $this->ml->getAsetDihapuskan($id_lokasi,$tahun_perolehan) 
+			'aset' => $this->ml->getAsetDihapuskan($tahun_perolehan) 
 		);
 
 		if (count($data['aset'])>0) {
@@ -142,17 +138,15 @@ class Laporan extends CI_Controller {
 			$this->load->view('layouts/footer');
 		} else {
 			$this->session->set_flashdata('gagal', 'Ditemukan');
-		    redirect('laporan/aset');
+		    redirect('laporan/penghapusan');
 		}
 	}
 
-	public function printPenghapusan($id_lokasi,$tahun_perolehan)
+	public function printPenghapusan($tahun_perolehan)
 	{
-		$id_lokasi = $this->uri->segment(3);
-		$tahun_perolehan = $this->uri->segment(4);
+		$tahun_perolehan = $this->uri->segment(3);
 
-		$data['aset'] = $this->ml->getAsetDihapuskan($id_lokasi,$tahun_perolehan);
-		$data['lokasi'] = $this->ml->getLokasiId($id_lokasi);
+		$data['aset'] = $this->ml->getAsetDihapuskan($tahun_perolehan);
 
 		if (count($data['aset'])>0) {
 			$this->load->view('laporan/p_penghapusan',$data);
@@ -162,22 +156,17 @@ class Laporan extends CI_Controller {
 		}
 	}
 
-	public function export_penghapusan($id_lokasi,$tahun_perolehan)
+	public function export_penghapusan($tahun_perolehan)
 	{
-		$id_lokasi = $this->uri->segment(3);
-		$tahun_perolehan = $this->uri->segment(4);
+		$tahun_perolehan = $this->uri->segment(3);
 
-		$aset = $this->ml->getAsetDihapuskanExcel($id_lokasi,$tahun_perolehan);
+		$aset = $this->ml->getAsetDihapuskanExcel($tahun_perolehan);
 
 		$spreadsheet = new Spreadsheet;
 
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A1', 'NO')
-					->setCellValue('B1', 'NAMA')
-					->setCellValue('C1', 'VOLUME')
-					->setCellValue('D1', 'SATUAN')
-					->setCellValue('E1', 'HARGA (Rp.)')
-					->setCellValue('F1', 'JUMLAH (Rp.)');
+					->setCellValue('B1', 'NAMA');
 
 		$kolom = 2;
 		$nomor = 1;
@@ -185,11 +174,7 @@ class Laporan extends CI_Controller {
 
 			$spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('A' . $kolom, $nomor)
-			->setCellValue('B' . $kolom, $item->nama_barang)
-			->setCellValue('C' . $kolom, $item->volume)
-			->setCellValue('D' . $kolom, $item->satuan)
-			->setCellValue('E' . $kolom, $item->harga)
-			->setCellValue('F' . $kolom, $item->total_harga);
+			->setCellValue('B' . $kolom, $item->nama_aset);
 
 			$kolom++;
 			$nomor++;

@@ -23,26 +23,22 @@ class ModelLaporan extends CI_Model {
 		return $query->result(); 
 	}
 
-	public function getAsetDihapuskan($id_lokasi,$tahun_pengadaan)
+	public function getAsetDihapuskan($tahun_pengadaan)
 	{
 		$this->db->select('*');
-		$this->db->from('penghapusan a');
-		$this->db->join('asets b', 'b.id_aset = a.id_aset');
-		$this->db->join('barang c', 'c.id_barang = b.id_barang');
-		$this->db->where('id_lokasi', $id_lokasi);
+		$this->db->from('asets');
 		$this->db->where('tahun_pengadaan', $tahun_pengadaan);
+		$this->db->where('deleted_at !=', NULL);
 		$query = $this->db->get();
 		return $query->result_array(); 
 	}
 
-	public function getAsetDihapuskanExcel($id_lokasi,$tahun_pengadaan)
+	public function getAsetDihapuskanExcel($tahun_pengadaan)
 	{
 		$this->db->select('*');
-		$this->db->from('penghapusan a');
-		$this->db->join('asets b', 'b.id_aset = a.id_aset');
-		$this->db->join('barang c', 'c.id_barang = b.id_barang');
-		$this->db->where('id_lokasi', $id_lokasi);
+		$this->db->from('asets');
 		$this->db->where('tahun_pengadaan', $tahun_pengadaan);
+		$this->db->where('deleted_at !=', NULL);
 		$query = $this->db->get();
 		return $query->result(); 
 	}
