@@ -42,14 +42,6 @@
               <form action="<?=base_url('laporan/search_pengadaan')?>" method="post">
                 <div class="row">
                     <div class="col-4">
-                        <select name="id_lokasi" class="form-control" required>
-                          <option value="">- Lokasi Aset --</option>
-                          <?php foreach ($lokasi as $row): ?>
-                            <option value="<?=$row['id_lokasi'];?>"><?=$row['nama_lokasi'];?></option>
-                          <?php endforeach ?>                              
-                        </select>
-                    </div>
-                    <div class="col-4">
                       <input type="text" class="form-control" name="tahun_pengadaan" placeholder="-- Tahun Pengadaan --">
                     </div>
                     <div class="col">
@@ -60,17 +52,12 @@
                     </div>              
                 </div>
               </form>
-              <a href="<?=base_url('laporan/print_pengadaan/').$this->input->post('id_lokasi').'/'.$this->input->post('tahun_pengadaan')?>" target="_blank" class="btn btn-danger mt-4">
+              <a href="<?=base_url('laporan/print_pengadaan/').$this->input->post('tahun_pengadaan')?>" target="_blank" class="btn btn-danger mt-4">
                 <i class="fa fa-print" aria-hidden="true"></i> Print
               </a>
-              <a href="<?=base_url('laporan/export_pengadaan/').$this->input->post('id_lokasi').'/'.$this->input->post('tahun_pengadaan')?>" class="btn btn-success mt-4">
+              <a href="<?=base_url('laporan/export_pengadaan/').$this->input->post('tahun_pengadaan')?>" class="btn btn-success mt-4">
                 <i class="fa fa-file" aria-hidden="true"></i> Export Excel
               </a>
-              <div class="mt-4">
-                <div class="col">
-                  <b>Lokasi Aset :</b> <?=$lok['nama_lokasi']?>
-                </div>
-              </div>
               <table class="table table-bordered mt-4">
                  <thead>
                    <tr>

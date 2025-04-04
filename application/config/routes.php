@@ -108,8 +108,8 @@ $route['penghapusan/simpan'] = 'Penghapusan/simpanPenghapusan';
 //Laporan Data Aset
 $route['laporan/aset'] = 'Laporan/aset';
 $route['laporan/search_aset'] = 'Laporan/searchAset';
-$route['laporan/print_aset/(:any)/(:any)'] = 'Laporan/printAset/(:any)/(:any)';
-$route['laporan/export_aset/(:any)/(:any)'] = 'Laporan/export_aset/(:any)/(:any)';
+$route['laporan/print_aset/(:any)'] = 'Laporan/printAset/(:any)';
+$route['laporan/export_aset/(:any)'] = 'Laporan/export_aset/(:any)';
 //Laporan Penghapusan
 $route['laporan/penghapusan'] = 'Laporan/penghapusan';
 $route['laporan/search_penghapusan'] = 'Laporan/searchPenghapusan';
@@ -121,8 +121,8 @@ $route['laporan/print_qrcode'] = 'Laporan/printQrcode';
 //Laporan Pengadaan
 $route['laporan/pengadaan'] = 'Laporan/pengadaan';
 $route['laporan/search_pengadaan'] = 'Laporan/searchPengadaan';
-$route['laporan/print_pengadaan/(:any)/(:any)'] = 'Laporan/printPengadaan/(:any)/(:any)';
-$route['laporan/export_pengadaan/(:any)/(:any)'] = 'Laporan/export_pengadaan/(:any)/(:any)';
+$route['laporan/print_pengadaan/(:any)'] = 'Laporan/printPengadaan/(:any)';
+$route['laporan/export_pengadaan/(:any)'] = 'Laporan/export_pengadaan/(:any)';
 
 
 //Settingan 

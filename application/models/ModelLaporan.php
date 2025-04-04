@@ -76,22 +76,20 @@ class ModelLaporan extends CI_Model {
 		return $query->row_array();
 	}
 
-	public function getPengadaan($id_lokasi,$tahun_pengadaan)
+	public function getPengadaan($tahun_pengadaan)
 	{
 		$this->db->select('*');
 		$this->db->from('pengadaan');
-		$this->db->where('id_lokasi', $id_lokasi);
 		$this->db->where('tahun_pengadaan', $tahun_pengadaan);
 		$this->db->where('status', '1');
 		$res = $this->db->get();
 		return $res->result_array();
 	}
 
-	public function getPengadaanExcel($id_lokasi,$tahun_pengadaan)
+	public function getPengadaanExcel($tahun_pengadaan)
 	{
 		$this->db->select('*');
 		$this->db->from('pengadaan');
-		$this->db->where('id_lokasi', $id_lokasi);
 		$this->db->where('tahun_pengadaan', $tahun_pengadaan);
 		$res = $this->db->get();
 		return $res->result();

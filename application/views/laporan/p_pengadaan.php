@@ -26,11 +26,6 @@
         </div>
   		</div>
   		<hr style="border: 1px solid black;">
-  		<div class="row">
-  			<div class="col text-center">
-  				<strong>Aset <?=$lokasi['nama_lokasi']?></strong>
-  			</div>
-  		</div>
   		<div class="row pt-3">
   			<div class="col text-center">
   				<table class="table table-bordered">

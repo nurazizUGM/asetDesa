@@ -122,7 +122,7 @@
                     <label for="tahun_pengadaan" class="col-sm-2 col-form-label">Tahun Pengadaan</label>
                     <div class="col-sm-6">
                       <div class="input-group mb-3">
-                        <input type="text" name="tahun_pengadaan" placeholder="20XX" class="form-control" required>
+                        <input type="number" min="2000" max="<?=date('Y')?>" name="tahun_pengadaan" placeholder="20XX" class="form-control" required>
                       </div>
                     </div>
                   </div>

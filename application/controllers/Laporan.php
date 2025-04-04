@@ -242,7 +242,6 @@ class Laporan extends CI_Controller {
 			'active_menu_lp' => 'menu-open',
 			'active_menu_lpr' => 'active',
 			'active_menu_lpnd' => 'active',
-			'lokasi' => $this->ml->getLokasi()  
 		);
 		$this->load->view('layouts/header',$data);
 		$this->load->view('laporan/v_pengadaan',$data);
@@ -251,7 +250,6 @@ class Laporan extends CI_Controller {
 
 	public function searchPengadaan()
 	{
-		$id_lokasi = $this->input->post('id_lokasi');
 		$tahun_pengadaan = $this->input->post('tahun_pengadaan');
 
 		$data = array(
@@ -259,9 +257,7 @@ class Laporan extends CI_Controller {
 			'active_menu_lp' => 'menu-open',
 			'active_menu_lpr' => 'active',
 			'active_menu_lpnd' => 'active',
-			'lokasi' => $this->ml->getLokasi(),
-			'lok' => $this->ml->getLokasiId($id_lokasi),
-			'pnd' => $this->ml->getPengadaan($id_lokasi,$tahun_pengadaan) 
+			'pnd' => $this->ml->getPengadaan($tahun_pengadaan) 
 		);
 
 		if (count($data['pnd'])>0) {
@@ -274,23 +270,19 @@ class Laporan extends CI_Controller {
 		}
 	}
 
-	public function printPengadaan($id_lokasi,$tahun_pengadaan)
+	public function printPengadaan($tahun_pengadaan)
 	{
-		$id_lokasi = $this->uri->segment(3);
-		$tahun_pengadaan = $this->uri->segment(4);
-
-		$data['pnd'] = $this->ml->getPengadaan($id_lokasi,$tahun_pengadaan);
-		$data['lokasi'] = $this->ml->getLokasiId($id_lokasi);
+    $tahun_pengadaan = $this->uri->segment(3);
+		$data['pnd'] = $this->ml->getPengadaan($tahun_pengadaan);
 
 		$this->load->view('laporan/p_pengadaan',$data);
 	}
 
-	public function export_pengadaan($id_lokasi,$tahun_pengadaan)
+	public function export_pengadaan($tahun_pengadaan)
 	{
-		$id_lokasi = $this->uri->segment(3);
-		$tahun_pengadaan = $this->uri->segment(4);
+		$tahun_pengadaan = $this->uri->segment(3);
 
-		$pnd = $this->ml->getPengadaanExcel($id_lokasi,$tahun_pengadaan);
+		$pnd = $this->ml->getPengadaanExcel($tahun_pengadaan);
 
 		$spreadsheet = new Spreadsheet;
 

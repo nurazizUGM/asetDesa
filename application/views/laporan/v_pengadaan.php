@@ -42,14 +42,6 @@
               <form action="<?=base_url('laporan/search_pengadaan')?>" method="post" autocomplete="off">
                 <div class="row">
                     <div class="col-4">
-                        <select name="id_lokasi" class="form-control" required>
-                          <option value="">- Lokasi Aset --</option>
-                          <?php foreach ($lokasi as $row): ?>
-                            <option value="<?=$row['id_lokasi'];?>"><?=$row['nama_lokasi'];?></option>
-                          <?php endforeach ?>                              
-                        </select>
-                    </div>
-                    <div class="col-4">
                       <input type="text" class="form-control" name="tahun_pengadaan" placeholder="-- Tahun Pengadaan --">
                     </div>
                     <div class="col">
@@ -71,9 +63,6 @@
                    <tr>
                      <th>No.</th>
                      <th>Nama</th>
-                     <th>Satuan</th>
-                     <th>Volume</th>
-                     <th>Harga</th>
                    </tr>
                  </thead>
                  <tbody>
