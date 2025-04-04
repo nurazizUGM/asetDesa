@@ -206,12 +206,12 @@
             <p>Monitoring</p>
           </a>
         </li>
-        <li class="nav-item has-treeview">
+        <!-- <li class="nav-item has-treeview">
           <a href="<?=base_url('penghapusan')?>" class="nav-link <?=isset($active_menu_penghapusan)?$active_menu_penghapusan:'' ?>">
             <i class="nav-icon fas fa-exclamation-triangle"></i>
             <p>Penghapusan</p>
           </a>
-        </li>
+        </li> -->
         <li class="nav-item has-treeview <?=isset($active_menu_lp)?$active_menu_lp:'' ?>">
           <a href="#" class="nav-link <?=isset($active_menu_lpr)?$active_menu_lpr:'' ?>">
             <i class="nav-icon fa fa-file"></i>
