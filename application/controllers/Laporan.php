@@ -1,11 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require('./application/third_party/phpoffice/vendor/autoload.php');
-
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
+/**
+ * @property CI_Session $session
+ * @property CI_Input $input
+ * @property CI_Url $uri
+ * @property ModelLaporan $ml
+ */
 class Laporan extends CI_Controller {
 
 	public function __construct()
@@ -27,7 +31,6 @@ class Laporan extends CI_Controller {
 			'active_menu_lp' => 'menu-open',
 			'active_menu_lpr' => 'active',
 			'active_menu_ast' => 'active',
-			'lokasi' => $this->ml->getLokasi()  
 		);
 		$this->load->view('layouts/header',$data);
 		$this->load->view('laporan/v_laporan',$data);
@@ -36,17 +39,14 @@ class Laporan extends CI_Controller {
 
 	public function searchAset()
 	{
-		$id_lokasi = $this->input->post('id_lokasi');
-		$tahun_perolehan = $this->input->post('tahun_perolehan');
+		$tahun_pengadaan = $this->input->post('tahun_pengadaan');
 
 		$data = array(
 			'title' => 'Laporan Data Aset',
 			'active_menu_lp' => 'menu-open',
 			'active_menu_lpr' => 'active',
 			'active_menu_ast' => 'active',
-			'lokasi' => $this->ml->getLokasi(),
-			'lok' => $this->ml->getLokasiId($id_lokasi),
-			'aset' => $this->ml->getAsetWujud($id_lokasi,$tahun_perolehan) 
+			'aset' => $this->ml->getAsetWujud($tahun_pengadaan) 
 		);
 
 		if (count($data['aset'])>0) {
@@ -59,13 +59,11 @@ class Laporan extends CI_Controller {
 		}
 	}
 
-	public function printAset($id_lokasi,$tahun_perolehan)
+	public function printAset($tahun_perolehan)
 	{
-		$id_lokasi = $this->uri->segment(3);
-		$tahun_perolehan = $this->uri->segment(4);
+		$tahun_perolehan = $this->uri->segment(3);
 
-		$data['aset'] = $this->ml->getAsetWujud($id_lokasi,$tahun_perolehan);
-		$data['lokasi'] = $this->ml->getLokasiId($id_lokasi);
+		$data['aset'] = $this->ml->getAsetWujud($tahun_perolehan);
 
 		if (count($data['aset'])>0) {
 			$this->load->view('laporan/p_aset',$data);
@@ -75,22 +73,17 @@ class Laporan extends CI_Controller {
 		}
 	}
 
-	public function export_aset($id_lokasi,$tahun_perolehan)
+	public function export_aset($tahun_perolehan)
 	{
-		$id_lokasi = $this->uri->segment(3);
-		$tahun_perolehan = $this->uri->segment(4);
+		$tahun_perolehan = $this->uri->segment(3);
 
-		$aset = $this->ml->getAsetWujudExcel($id_lokasi,$tahun_perolehan);
+		$aset = $this->ml->getAsetWujudExcel($tahun_perolehan);
 
 		$spreadsheet = new Spreadsheet;
 
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A1', 'NO')
-					->setCellValue('B1', 'NAMA')
-					->setCellValue('C1', 'VOLUME')
-					->setCellValue('D1', 'SATUAN')
-					->setCellValue('E1', 'HARGA (Rp.)')
-					->setCellValue('F1', 'JUMLAH (Rp.)');
+					->setCellValue('B1', 'NAMA');
 
 		$kolom = 2;
 		$nomor = 1;
@@ -98,11 +91,7 @@ class Laporan extends CI_Controller {
 
 			$spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('A' . $kolom, $nomor)
-			->setCellValue('B' . $kolom, $item->nama_barang)
-			->setCellValue('C' . $kolom, $item->volume)
-			->setCellValue('D' . $kolom, $item->satuan)
-			->setCellValue('E' . $kolom, $item->harga)
-			->setCellValue('F' . $kolom, $item->total_harga);
+			->setCellValue('B' . $kolom, $item->nama_aset);
 
 			$kolom++;
 			$nomor++;
