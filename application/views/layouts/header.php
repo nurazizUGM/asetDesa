@@ -207,12 +207,6 @@
           </a>
         </li>
         <li class="nav-item has-treeview">
-          <a href="<?=base_url('penyusutan')?>" class="nav-link <?=isset($active_menu_pys)?$active_menu_pys:'' ?>">
-            <i class="nav-icon fas fa-chart-area"></i>
-            <p>Penyusutan</p>
-          </a>
-        </li>
-        <li class="nav-item has-treeview">
           <a href="<?=base_url('penghapusan')?>" class="nav-link <?=isset($active_menu_penghapusan)?$active_menu_penghapusan:'' ?>">
             <i class="nav-icon fas fa-exclamation-triangle"></i>
             <p>Penghapusan</p>
