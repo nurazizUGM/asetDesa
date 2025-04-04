@@ -1,0 +1,1 @@
+ALTER TABLE `pengadaan` DROP COLUMN `id_lokasi`;

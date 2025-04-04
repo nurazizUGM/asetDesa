@@ -46,11 +46,6 @@
                         <td><?=$d['jabatan'] ?></td>
                       </tr>
                       <tr>
-                        <td width="200px">Penempatan Aset</td>
-                        <td width="50px">:</td>
-                        <td><?=$d['nama_lokasi'] ?></td>
-                      </tr>
-                      <tr>
                         <td width="100px">Nama Aset</td>
                         <td width="50px">:</td>
                         <td><?=$d['nama_aset'] ?></td>

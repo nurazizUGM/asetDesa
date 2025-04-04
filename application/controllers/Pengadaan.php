@@ -1,6 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * @property CI_Session $session
+ * @property CI_Input $input
+ * @property CI_Uri $uri
+ * @property ModelPengadaan $mp
+ * @property ModelMonitoring $mm
+ */
 class Pengadaan extends CI_Controller {
 
 	public function __construct()
@@ -197,7 +204,6 @@ class Pengadaan extends CI_Controller {
 			'active_menu_open_pnd' => 'menu-open',
 			'active_pengadaan' => 'active',
 			'active_menu_pnd' => 'active',
-			'lokasi' => $this->ml->getLokasi(),
 			'nilai' => $this->mp->getPenilaian(),
 			'maxspek' => $this->mp->getMaxSpesifikasi(),
 			'maxkual' => $this->mp->getMaxKualitas(),
@@ -230,7 +236,6 @@ class Pengadaan extends CI_Controller {
 	{
 		$id_user = $this->session->userdata('id_user');
 		$data = array(
-			'id_lokasi' => $this->input->post('id_lokasi'),
 			'id_user' => $id_user,
 			'nama_aset' => $this->input->post('nama_aset'),
 			'volume' => $this->input->post('volume'),
@@ -243,9 +248,9 @@ class Pengadaan extends CI_Controller {
 
 		$result = $this->mp->storePengadaan($data);
 
-		if($result>=1){
+		if($result){
 			$this->session->set_flashdata('sukses', 'Disimpan');
-			redirect('pengajuan');
+			redirect('pengadaan');
 		}else{
 			$this->session->set_flashdata('gagal', 'Disimpan');
 			redirect('pengajuan');

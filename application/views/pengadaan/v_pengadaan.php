@@ -43,15 +43,7 @@
             <form action="<?=base_url('pengadaan/filter')?>" method="POST" autocomplete="off">
               <div class="row">
                 <div class="col-4">
-                  <select name="id_lokasi" class="form-control" required>
-                    <option value="">- Pilih Lokasi --</option>
-                    <?php foreach ($lokasi as $row): ?>
-                      <option value="<?=$row['id_lokasi'];?>"><?=$row['nama_lokasi'];?></option>
-                    <?php endforeach ?>      
-                  </select>
-                </div>
-                <div class="col-4">
-                  <input type="text" name="tahun_pengadaan" class="form-control" placeholder="Tahun Pengadaan" required>
+                  <input type="text" name="tahun_pengadaan" class="form-control" placeholder="Tahun Pengadaan">
                 </div>
                 <div class="col">
                   <button type="submit" class="btn btn-block btn-outline-primary">Filter</button>
@@ -69,7 +61,6 @@
                 <tr>
                   <th>No.</th>
                   <th>Nama</th>
-                  <th>Penempatan</th>
                   <th>Nama Aset</th>
                   <th>Tahun</th>
                   <th>Status</th>
@@ -82,7 +73,6 @@
                   <tr>
                     <td><?=$no++;?></td>
                     <td><?=$row['nama_user'];?></td>
-                    <td><?=$row['nama_lokasi'];?></td>
                     <td><?=$row['nama_aset'];?></td>
                     <td><?=$row['tahun_pengadaan'];?></td>
                     <td>
@@ -121,7 +111,6 @@
                  <tr>
                   <td><?=$no++;?></td>
                   <td><?=$row['nama_user'];?></td>
-                  <td><?=$row['nama_lokasi'];?></td>
                   <td><?=$row['nama_aset'];?></td>
                   <td><?=$row['tahun_pengadaan'];?></td>
                   <td>
@@ -150,7 +139,6 @@
                 <tr>
                   <th>No.</th>
                   <th>Nama</th>
-                  <th>Penempatan</th>
                   <th>Nama Aset</th>
                   <th>Tahun</th>
                   <th>Status</th>

@@ -9,7 +9,7 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="<?=base_url('home')?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= base_url('home') ?>">Home</a></li>
             <li class="breadcrumb-item"><a href="#">Pengadaan</a></li>
             <li class="breadcrumb-item active">Pengajuan</li>
           </ol>
@@ -18,84 +18,77 @@
     </div><!-- /.container-fluid -->
   </section>
 
-  <div class="flash-data" data-flashdata="<?=$this->session->flashdata('sukses');?>"></div>
-  <div class="flash-data-gagal" data-flashdatagagal="<?=$this->session->flashdata('gagal');?>"></div>
+  <div class="flash-data" data-flashdata="<?= $this->session->flashdata('sukses'); ?>"></div>
+  <div class="flash-data-gagal" data-flashdatagagal="<?= $this->session->flashdata('gagal'); ?>"></div>
 
   <!-- Main content -->
   <section class="content">
-     <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Rekomendasi Pengadaan Aset</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                  <?php 
-                    $no=1; 
-                    $arr = array();
-
-                    foreach ($nilai as $row){
-                      $spek = ($row['nilai_spek']/$maxspek['maks_spek']);
-                      $kual = ($row['nilai_kualitas']/$maxkual['maks_kualitas']);
-                      $hrg = ($row['harga']/$minharga['min_harga']);
-                      $nilai = round(($spek*0.3)+($kual*0.3)+($hrg*0.4),3);
-                  
-                      $arr[] = '<b>'.$row['nama_aset'].'</b>';
-                    } 
-
-                    $output = max($arr);
-
-                    echo "<p>Berdasarkan hasil perhitungan, maka pemilihan aset terbaik untuk pengadaan  adalah ".$output;                
-                  ?>
-              </div>
-              <!-- /.card-body -->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Rekomendasi Pengadaan Aset</h3>
             </div>
-          </div>
-          <div class="col-md-6">
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Rekomendasi Jumlah Pengadaan</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <select name="id_lokasi" class="id_lokasi form-control" required>
-                  <option value="">- Cari --</option>
-                  <?php foreach ($mt as $x): ?>
-                    <option><?=$x['nama_barang'];?> | Jumlah Kerusakan : <?=$x['jml_rusak'];?> <?=$x['satuan'];?></option>
-                  <?php endforeach ?>      
-                </select>
-              </div>
-              <!-- /.card-body -->
+            <!-- /.card-header -->
+            <div class="card-body">
+              <?php
+              if (count($nilai) > 0) {
+                $no = 1;
+                $arr = array();
+
+                foreach ($nilai as $row) {
+                  $spek = ($row['nilai_spek'] / $maxspek['maks_spek']);
+                  $kual = ($row['nilai_kualitas'] / $maxkual['maks_kualitas']);
+                  $hrg = ($row['harga'] / $minharga['min_harga']);
+                  $nilai = round(($spek * 0.3) + ($kual * 0.3) + ($hrg * 0.4), 3);
+
+                  $arr[] = '<b>' . $row['nama_aset'] . '</b>';
+                }
+
+                $output = max($arr);
+
+                echo "<p>Berdasarkan hasil perhitungan, maka pemilihan aset terbaik untuk pengadaan  adalah " . $output;
+              } else {
+                echo "<p>Belum ada data yang diinputkan";
+              }
+              ?>
             </div>
+            <!-- /.card-body -->
           </div>
         </div>
-        <div class="row">
-          <!-- left column -->
-          <div class="col-md-12">
-            <!-- general form elements -->
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Form Pengadaan Aset</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                 <?php if ($this->session->userdata('role')=='1' || $this->session->userdata('role')=='2'): ?>
-                <?php endif ?>
-                <form class="form-horizontal" action="<?=base_url('pengadaan/simpan')?>" autocomplete="off" method="post">
+        <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Rekomendasi Jumlah Pengadaan</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <select name="id_lokasi" class="id_lokasi form-control" required>
+                <option value="">- Cari --</option>
+                <?php foreach ($mt as $x): ?>
+                  <option><?= $x['nama_aset'] ?> | Jumlah Kerusakan : <?= $x['jml_rusak'] ?></option>
+                <?php endforeach ?>
+              </select>
+            </div>
+            <!-- /.card-body -->
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Form Pengadaan Aset</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <?php if ($this->session->userdata('role') == '1' || $this->session->userdata('role') == '2'): ?>
+              <?php endif ?>
+              <form class="form-horizontal" action="<?= base_url('pengadaan/simpan') ?>" autocomplete="off" method="post">
                 <div class="card-body">
-                 <div class="form-group row">
-                  <label for="id_lokasi" class="col-sm-2 col-form-label">Lokasi Penempatan</label>
-                  <div class="col-sm-6">
-                    <select name="id_lokasi" class="id_lokasi form-control" required>
-                      <option value="">- Pilih --</option>
-                      <?php foreach ($lokasi as $x): ?>
-                        <option value="<?=$x['id_lokasi'];?>"><?=$x['nama_lokasi'];?></option>
-                      <?php endforeach ?>      
-                    </select>
-                  </div>
-                </div>
                   <div class="form-group row">
                     <label for="nama_aset" class="col-sm-2 col-form-label">Nama Aset</label>
                     <div class="col-sm-6">
@@ -115,7 +108,7 @@
                         <option value="">- Pilih --</option>
                         <option value="Buah">Buah</option>
                         <option value="Lembar">Lembar</option>
-                        <option value="Unit">Unit</option>     
+                        <option value="Unit">Unit</option>
                       </select>
                     </div>
                   </div>
@@ -132,39 +125,36 @@
                         <input type="text" name="tahun_pengadaan" placeholder="20XX" class="form-control" required>
                       </div>
                     </div>
-                  </div>          
+                  </div>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
                   <div class="col-2">
-                    
+
                   </div>
                   <div class="col-6">
                     <button type="submit" class="btn btn-info">Simpan</button>
-                  </div>                 
+                  </div>
                 </div>
                 <!-- /.card-footer -->
               </form>
-              </div>
-              <!-- /.card-body -->
             </div>
-            <!-- /.card -->
+            <!-- /.card-body -->
           </div>
-          <!--/.col (left) -->
+          <!-- /.card -->
         </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
+        <!--/.col (left) -->
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
   </section>
   <!-- /.content -->
 </div>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <script>
-
   $(document).ready(function() {
     $('.id_lokasi').select2({
       theme: "classic"
     });
   });
 </script>
-
-

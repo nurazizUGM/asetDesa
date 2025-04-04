@@ -74,7 +74,6 @@ class ModelPengadaan extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('pengadaan a');
 		$this->db->join('users b', 'b.id_user = a.id_user');
-		$this->db->join('lokasi_aset c', 'c.id_lokasi = a.id_lokasi');
 		$query = $this->db->get();
 		return $query->result_array();
 	}
@@ -84,7 +83,6 @@ class ModelPengadaan extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('pengadaan a');
 		$this->db->join('users b', 'b.id_user = a.id_user');
-		$this->db->join('lokasi_aset c', 'c.id_lokasi = a.id_lokasi');
 		$this->db->where('a.id_user', $id_user);
 		$query = $this->db->get();
 		return $query->result_array();
@@ -95,7 +93,6 @@ class ModelPengadaan extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('pengadaan a');
 		$this->db->join('users b', 'b.id_user = a.id_user');
-		$this->db->join('lokasi_aset c', 'c.id_lokasi = a.id_lokasi');
 		$this->db->where('id_pengadaan', $id_pengadaan);
 		$query = $this->db->get();
 		return $query->result_array();
@@ -106,8 +103,6 @@ class ModelPengadaan extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('pengadaan a');
 		$this->db->join('users b', 'b.id_user = a.id_user');
-		$this->db->join('lokasi_aset c', 'c.id_lokasi = a.id_lokasi');
-		$this->db->where('a.id_lokasi', $id_lokasi);
 		$this->db->where('tahun_pengadaan', $tahun_pengadaan);
 		$query = $this->db->get();
 		return $query->result_array();
