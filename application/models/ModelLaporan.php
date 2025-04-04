@@ -43,14 +43,10 @@ class ModelLaporan extends CI_Model {
 		return $query->result(); 
 	}
 
-	public function getAsetQr($id_lokasi,$tahun_pengadaan)
+	public function getAsetQr($tahun_pengadaan)
 	{
 		$this->db->select('*');
 		$this->db->from('asets a');
-		$this->db->join('barang b', 'b.id_barang = a.id_barang');
-		$this->db->where('volume !=', 0);
-		$this->db->where('volume >', 0);
-		$this->db->where('id_lokasi', $id_lokasi);
 		$this->db->where('tahun_pengadaan', $tahun_pengadaan);
 		$this->db->where('qr_code !=', NULL);
 		$query = $this->db->get();

@@ -197,7 +197,6 @@ class Laporan extends CI_Controller {
 			'active_menu_lp' => 'menu-open',
 			'active_menu_lpr' => 'active',
 			'active_menu_qr' => 'active',
-			'lokasi' => $this->ml->getLokasi()  
 		);
 		$this->load->view('layouts/header',$data);
 		$this->load->view('laporan/v_qrcode',$data);
@@ -206,11 +205,9 @@ class Laporan extends CI_Controller {
 
 	public function printQrcode()
 	{
-		$id_lokasi = $this->input->post('id_lokasi');
 		$tahun_perolehan = $this->input->post('tahun_perolehan');
 
-		$data['aset'] = $this->ml->getAsetQr($id_lokasi,$tahun_perolehan);
-		$data['lokasi'] = $this->ml->getLokasiId($id_lokasi);
+		$data['aset'] = $this->ml->getAsetQr($tahun_perolehan);
 
 		if (count($data['aset'])>0) {
 			$this->load->view('laporan/p_qrcode',$data);
