@@ -1,6 +1,16 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * @property CI_Session $session
+ * @property Monitoring_model $mm
+ * @property ModelAset $ma
+ * @property CI_Upload $upload
+ * @property CI_Image_lib $image_lib
+ * @property CI_DB_query_builder $db
+ * @property CI_Input $input
+ * @property CI_URI $uri
+ */
 class Monitoring extends CI_Controller {
 
 	public function __construct()

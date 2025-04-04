@@ -1,5 +1,5 @@
 <!-- summernote -->
-<link rel="stylesheet" href="<?=base_url()?>src/backend/plugins/summernote/summernote-bs4.css">
+<link rel="stylesheet" href="<?= base_url() ?>src/backend/plugins/summernote/summernote-bs4.css">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -11,7 +11,7 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="<?=base_url('home')?>">Home</a></li>
+            <li class="breadcrumb-item"><a href="<?= base_url('home') ?>">Home</a></li>
             <li class="breadcrumb-item active">Monitoring</li>
           </ol>
         </div>
@@ -19,22 +19,22 @@
     </div><!-- /.container-fluid -->
   </section>
 
-  <div class="flash-data-gagal" data-flashdatagagal="<?=$this->session->flashdata('gagal');?>"></div>
+  <div class="flash-data-gagal" data-flashdatagagal="<?= $this->session->flashdata('gagal'); ?>"></div>
 
   <!-- Main content -->
   <section class="content">
-     <div class="container-fluid">
-        <div class="row">
-          <!-- left column -->
-          <div class="col-md-12">
-            <!-- general form elements -->
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Form Tambah Data</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <form class="form-horizontal" action="<?=base_url('monitoring/simpan')?>" autocomplete="off" method="post" enctype="multipart/form-data">
+    <div class="container-fluid">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Form Tambah Data</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <form class="form-horizontal" action="<?= base_url('monitoring/simpan') ?>" autocomplete="off" method="post" enctype="multipart/form-data">
                 <div class="card-body">
                   <div class="form-group row">
                     <label for="id_aset" class="col-sm-4 col-form-label">Kode Aset</label>
@@ -42,8 +42,8 @@
                       <select name="id_aset" class="id_aset form-control" required>
                         <option value="">- Pilih --</option>
                         <?php foreach ($aset as $x): ?>
-                          <option value="<?=$x['id_aset'];?>"><?=$x['kode_aset'];?> | <?=$x['nama_barang'];?></option>
-                        <?php endforeach ?>      
+                          <option value="<?= $x['id_aset'] ?>"><?= $x['kode_aset'] ?> | <?= $x['nama_aset'] ?></option>
+                        <?php endforeach ?>
                       </select>
                     </div>
                   </div>
@@ -82,70 +82,67 @@
                     <div class="col-sm-6">
                       <input type="number" name="jml_rusak" class="form-control" placeholder="Masukan Jumlah.." required>
                     </div>
-                  </div> 
+                  </div>
                   <div class="form-group row">
                     <label for="foto" class="col-sm-4 col-form-label">Foto Fisik Aset</label>
                     <div class="col-sm-6">
-                     <div class="input-group">
-                      <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="foto" name="foto" accept="image/*" required>
-                        <label class="custom-file-label" for="exampleInputFile">Pilih Gambar</label>
+                      <div class="input-group">
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" id="foto" name="foto" accept="image/*" required>
+                          <label class="custom-file-label" for="exampleInputFile">Pilih Gambar</label>
+                        </div>
                       </div>
                     </div>
-                    </div>        
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                  <a href="<?=base_url('monitoring')?>">
-                    <button type="button" class="btn btn-danger">Kembali</button>
-                  </a>
-                  <button type="submit" class="btn btn-info">Simpan</button>
-                </div>
-                <!-- /.card-footer -->
+                  </div>
+                  <!-- /.card-body -->
+                  <div class="card-footer">
+                    <a href="<?= base_url('monitoring') ?>">
+                      <button type="button" class="btn btn-danger">Kembali</button>
+                    </a>
+                    <button type="submit" class="btn btn-info">Simpan</button>
+                  </div>
+                  <!-- /.card-footer -->
               </form>
-              </div>
-              <!-- /.card-body -->
             </div>
-            <!-- /.card -->
+            <!-- /.card-body -->
           </div>
-          <!--/.col (left) -->
+          <!-- /.card -->
         </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
+        <!--/.col (left) -->
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
   </section>
   <!-- /.content -->
 </div>
 <!-- Summernote -->
-<script src="<?=base_url()?>src/backend/plugins/summernote/summernote-bs4.min.js"></script>
-<script src="<?=base_url()?>src/backend/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<script src="<?= base_url() ?>src/backend/plugins/summernote/summernote-bs4.min.js"></script>
+<script src="<?= base_url() ?>src/backend/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <script>
-
   $(document).ready(function() {
     $('.id_aset').select2({
       theme: "classic"
     });
   });
 
-  $(document).ready(function () {
+  $(document).ready(function() {
     bsCustomFileInput.init();
   });
 
-  $(function () {
+  $(function() {
     // Summernote
     $('.textarea').summernote({
-    height: 150,  
-    toolbar: [
-      // [groupName, [list of button]]
-      ['style', ['bold', 'italic', 'underline', 'clear']],
-      ['font', ['strikethrough', 'superscript', 'subscript']],
-      ['fontsize', ['fontsize']],
-      ['color', ['color']],
-      ['para', ['ul', 'ol', 'paragraph']],
-      ['height', ['height']]
+      height: 150,
+      toolbar: [
+        // [groupName, [list of button]]
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['font', ['strikethrough', 'superscript', 'subscript']],
+        ['fontsize', ['fontsize']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['height', ['height']]
       ]
     });
   });
 </script>
-
-
