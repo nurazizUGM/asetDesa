@@ -1,6 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * @property CI_Database $db
+ * @property CI_Loader $load
+ * @property CI_Session $session
+ * @property ModelStatistik $ms
+ */
 class Statistik extends CI_Controller {
 
 	public function __construct()
@@ -13,6 +19,7 @@ class Statistik extends CI_Controller {
 
 		//load model
 		$this->load->model('ModelStatistik','ms');
+    $this->load->model('ModelAset','ma');
 	}
 
 	public function index()
@@ -20,11 +27,10 @@ class Statistik extends CI_Controller {
 		$data = array(
 			'title' => 'Statistik Aset',
 			'active_menu_statistik' => 'active',
-			'kondisi' => $this->ms->getKondisiAset(),
-			'ktgr' => $this->ms->getNamaKategoriAset(),
-			'kode' => $this->ms->getKodeKategoriAset(),
+      'label_kategori' => $this->ms->getNamaKategoriAset(),
+      'kategori'=> $this->ms->getKodeKategoriAset(),
 			'bw' => $this->ms->getAsetWujud(),
-			'ph' => $this->db->get('penghapusan')->num_rows()  
+			'ph' => $this->ms->countAsetHapus(),  
 		);
 
 		$this->load->view('layouts/header',$data);
