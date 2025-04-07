@@ -100,9 +100,9 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-light-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="<?=base_url()?>" class="brand-link">
-      <img src="<?=base_url()?>src/backend/dist/img/logo.png" class="logo">
-      <!-- <span class="brand-text font-weight-light">iAset</span> -->
+    <a href="<?=base_url()?>" class="brand-link d-flex">
+      <img src="<?=base_url()?>src/backend/dist/img/iaset.png" height="48px" class="logo">
+      <span class="brand-text mx-3 text-bold text-xl">SIMA</span>
     </a>
 
     <!-- Sidebar -->
