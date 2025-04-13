@@ -58,6 +58,8 @@ $route['aset_wujud/filter'] = 'Aset/filterAset';
 //Dihapuskan
 $route['aset_dihapuskan'] = 'Aset/dihapuskanAset';
 $route['aset_dihapuskan/detail/(:any)'] = 'Aset/detailDihapuskanAset/(:any)';
+$route['aset_dihapuskan/prune/(:any)'] = 'Aset/pruneAset/$1';
+$route['aset_dihapuskan/restore/(:any)'] = 'Aset/restoreAset/$1';
 $route['aset_dihapuskan/filter'] = 'Aset/filterAsetDihapuskan';
 
 //Keputusan Pengadaan

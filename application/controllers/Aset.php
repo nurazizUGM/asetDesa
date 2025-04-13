@@ -298,6 +298,21 @@ class Aset extends CI_Controller
         redirect('aset_wujud');
     }
 
+    public function pruneAset($id){
+      $this->db->where('id_aset', $id);
+      $this->db->delete('asets');
+      $this->session->set_flashdata('sukses', 'Dihapus');
+      redirect('aset_dihapuskan');
+    }
+
+    public function restoreAset($id_aset)
+    {
+        $this->db->where('id_aset', $id_aset);
+        $this->db->update('asets', array('deleted_at' => null));
+        $this->session->set_flashdata('sukses', 'Dikembalikan');
+        redirect('aset_dihapuskan');
+    }
+
     public function filterAset()
     {
         $id_kategori = $this->input->post('id_kategori');

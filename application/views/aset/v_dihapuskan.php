@@ -89,6 +89,12 @@
                         <a href="<?=base_url('aset_dihapuskan/detail/'.$row['id_aset'])?>" class="btn btn-success btn-sm">
                             <i class="fas fa-eye"></i>
                         </a>
+                        <a href="<?=base_url('aset_dihapuskan/restore/'.$row['id_aset'])?>" class="btn btn-warning btn-sm">
+                            <i class="fas fa-undo"></i>
+                        </a>
+                        <a href="<?=base_url('aset_dihapuskan/prune/'.$row['id_aset'])?>" class="btn btn-danger btn-sm tombol-hapus">
+                            <i class="fas fa-trash"></i>
+                        </a>
                     </td>
                 </tr>
                 <?php endforeach ?>
