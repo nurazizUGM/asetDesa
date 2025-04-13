@@ -84,101 +84,104 @@ class Aset extends CI_Controller
             )
         );
 
-        if ($this->form_validation->run() == TRUE) {
-            // Buat UUID untuk ID Aset
-            $id_aset = str_replace('-', '', $this->uuid->v4());
-            $image_name = $id_aset . '.png';
-
-            // generate QR Code
-            $kode_aset = $this->input->post('kode_aset');
-            $config['imagedir'] = './src/img/qrcode/';
-            $this->ciqrcode->initialize($config);
-            $url = base_url('aset/detail/' . $id_aset);
-
-            // Konfigurasi QR Code
-            $params['data'] = $url;
-            $params['level'] = 'H';
-            $params['size'] = 10;
-            $params['savename'] = FCPATH . $config['imagedir'] . $image_name;
-            $this->ciqrcode->generate($params);
-
-            // Data yang akan disimpan
-            $data = array(
-                'id_aset' => $id_aset,
-                'kode_aset' => $kode_aset,
-                'nama_aset' => $this->input->post('nama_aset'),
-                'nup_aset' => $this->input->post('nama_aset'),
-                'kategori_aset' => $this->input->post('kategori_aset'),
-                'tahun_pengadaan' => $this->input->post('tahun_pengadaan'),
-                'qr_code' => $image_name
-            );
-
-            $detail = array('id_aset' => $id_aset);
-            switch ($data['kategori_aset']) {
-                case ModelAset::KATEGORI_TANAH:
-                    $detail['luas'] = $this->input->post('luas');
-                    $detail['alamat'] = $this->input->post('alamat');
-                    $detail['kegunaan'] = $this->input->post('kegunaan');
-                    $detail['latitude'] = $this->input->post('latitude');
-                    $detail['longitude'] = $this->input->post('longitude');
-                    $detail['harga_satuan'] = $this->input->post('harga_satuan');
-                    $detail['harga_total'] = $this->input->post('harga_total');
-                    $detail['harga_sewa_satuan'] = $this->input->post('harga_sewa_satuan');
-                    $detail['harga_sewa_total'] = $this->input->post('harga_sewa_total');
-                    $detail['jarak_sumber_air'] = $this->input->post('jarak_sumber_air');
-                    $detail['jarak_jalan_utama'] = $this->input->post('jarak_jalan_utama');
-                    if (!empty($_FILES['foto'])) {
-                        $config['upload_path'] = './src/img/aset/';
-                        $config['allowed_types'] = 'jpg|jpeg|png';
-                        $config['max_size'] = 2048; // 2MB
-                        $config['file_name'] = 'foto_' . time();
-
-                        $this->load->library('upload', $config);
-
-                        if ($this->upload->do_upload('foto')) {
-                            $uploadData = $this->upload->data();
-                            $detail['foto'] = '/src/img/aset/' . $uploadData['file_name'];
-                        } else {
-                            $this->session->set_flashdata('gagal', $this->upload->display_errors());
-                            redirect(base_url('aset_wujud/tambah'));
-                        }
-                    } else {
-                        $detail['foto'] = null;
-                    }
-                    break;
-                case ModelAset::KATEGORI_PERALATAN:
-                    $detail['merk'] = $this->input->post('merk');
-                    $detail['bahan'] = $this->input->post('bahan');
-                    $detail['perolehan'] = $this->input->post('perolehan');
-                    break;
-                case ModelAset::KATEGORI_BANGUNAN:
-                    $detail['perolehan'] = $this->input->post('perolehan');
-                    break;
-            }
-
-            // Simpan ke database
-            $result = $this->ma->storeAset($data, $detail);
-            if ($result) {
-                $this->session->set_flashdata('sukses', 'Aset berhasil disimpan');
-                redirect(base_url('aset_wujud'));
-            } else {
-                $this->session->set_flashdata('gagal', 'Aset gagal disimpan');
-                redirect(base_url('aset_wujud/tambah'));
-            }
-
-            // Jika validasi gagal, tampilkan form lagi
-            $data = array(
-                'title' => 'Aset Berwujud',
-                'active_menu_open' => 'menu-open',
-                'active_menu_aset' => 'active',
-                'active_menu_wujud' => 'active',
-                'aset' => $this->ma->getAsetWujud()
-            );
-
-            $this->load->view('layouts/header', $data);
-            $this->load->view('aset/c_wujud', $data);
-            $this->load->view('layouts/footer');
+        if (!$this->form_validation->run()) {
+            $this->session->set_flashdata('gagal', validation_errors());
+            redirect(base_url('aset_wujud/tambah'));
         }
+        
+        // Buat UUID untuk ID Aset
+        $id_aset = str_replace('-', '', $this->uuid->v4());
+        $image_name = $id_aset . '.png';
+
+        // generate QR Code
+        $kode_aset = $this->input->post('kode_aset');
+        $config['imagedir'] = './src/img/qrcode/';
+        $this->ciqrcode->initialize($config);
+        $url = base_url('aset/detail/' . $id_aset);
+
+        // Konfigurasi QR Code
+        $params['data'] = $url;
+        $params['level'] = 'H';
+        $params['size'] = 10;
+        $params['savename'] = FCPATH . $config['imagedir'] . $image_name;
+        $this->ciqrcode->generate($params);
+
+        // Data yang akan disimpan
+        $data = array(
+            'id_aset' => $id_aset,
+            'kode_aset' => $kode_aset,
+            'nama_aset' => $this->input->post('nama_aset'),
+            'nup_aset' => $this->input->post('nama_aset'),
+            'kategori_aset' => $this->input->post('kategori_aset'),
+            'tahun_pengadaan' => $this->input->post('tahun_pengadaan'),
+            'qr_code' => $image_name
+        );
+
+        $detail = array('id_aset' => $id_aset);
+        switch ($data['kategori_aset']) {
+            case ModelAset::KATEGORI_TANAH:
+                $detail['luas'] = $this->input->post('luas');
+                $detail['alamat'] = $this->input->post('alamat');
+                $detail['kegunaan'] = $this->input->post('kegunaan');
+                $detail['latitude'] = $this->input->post('latitude');
+                $detail['longitude'] = $this->input->post('longitude');
+                $detail['harga_satuan'] = $this->input->post('harga_satuan');
+                $detail['harga_total'] = $this->input->post('harga_total');
+                $detail['harga_sewa_satuan'] = $this->input->post('harga_sewa_satuan');
+                $detail['harga_sewa_total'] = $this->input->post('harga_sewa_total');
+                $detail['jarak_sumber_air'] = $this->input->post('jarak_sumber_air');
+                $detail['jarak_jalan_utama'] = $this->input->post('jarak_jalan_utama');
+                if (!empty($_FILES['foto'])) {
+                    $config['upload_path'] = './src/img/aset/';
+                    $config['allowed_types'] = 'jpg|jpeg|png';
+                    $config['max_size'] = 2048; // 2MB
+                    $config['file_name'] = 'foto_' . time();
+
+                    $this->load->library('upload', $config);
+
+                    if ($this->upload->do_upload('foto')) {
+                        $uploadData = $this->upload->data();
+                        $detail['foto'] = '/src/img/aset/' . $uploadData['file_name'];
+                    } else {
+                        $this->session->set_flashdata('gagal', $this->upload->display_errors());
+                        redirect(base_url('aset_wujud/tambah'));
+                    }
+                } else {
+                    $detail['foto'] = null;
+                }
+                break;
+            case ModelAset::KATEGORI_PERALATAN:
+                $detail['merk'] = $this->input->post('merk');
+                $detail['bahan'] = $this->input->post('bahan');
+                $detail['perolehan'] = $this->input->post('perolehan');
+                break;
+            case ModelAset::KATEGORI_BANGUNAN:
+                $detail['perolehan'] = $this->input->post('perolehan');
+                break;
+        }
+
+        // Simpan ke database
+        $result = $this->ma->storeAset($data, $detail);
+        if ($result) {
+            $this->session->set_flashdata('sukses', 'Aset berhasil disimpan');
+            redirect(base_url('aset_wujud'));
+        } else {
+            $this->session->set_flashdata('gagal', 'Aset gagal disimpan');
+            redirect(base_url('aset_wujud/tambah'));
+        }
+
+        // Jika validasi gagal, tampilkan form lagi
+        $data = array(
+            'title' => 'Aset Berwujud',
+            'active_menu_open' => 'menu-open',
+            'active_menu_aset' => 'active',
+            'active_menu_wujud' => 'active',
+            'aset' => $this->ma->getAsetWujud()
+        );
+
+        $this->load->view('layouts/header', $data);
+        $this->load->view('aset/c_wujud', $data);
+        $this->load->view('layouts/footer');
     }
 
 
