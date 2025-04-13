@@ -33,8 +33,11 @@
             Tambah Aset
         </a>
         <button type="button" class="btn bg-gradient-success" data-toggle="modal" data-target="#importExcelModal">
-            <i class="fas fa-file-excel"></i> Import Excel
+          <i class="fas fa-file-excel"></i> Import Excel
         </button>
+        <a href="<?=base_url('aset_wujud/export_excel')?>" class="btn bg-gradient-success">
+            <i class="fas fa-file-excel"></i> Export Excel
+        </a>
     </h3>
     <div class="card-tools">
         <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">

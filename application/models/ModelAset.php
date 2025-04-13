@@ -26,7 +26,6 @@ class ModelAset extends CI_Model
         return $query->result_array();
     }
 
-
     public function getAsetDihapuskan($kategori, $tgl_penghapusan)
     {
         $this->db->select('*');
@@ -204,6 +203,43 @@ class ModelAset extends CI_Model
         $this->db->from('penghapusan');
         $query = $this->db->get();
         return $query->num_rows();
+    }
+
+    public function getAllAsetDetail(){
+      $this->db->select('*');
+      $this->db->where('deleted_at', null);
+      $this->db->from('asets a');
+      $asets = $this->db->get()->result_array();
+
+      $result = [
+          ModelAset::KATEGORI_TANAH => [],
+          ModelAset::KATEGORI_PERALATAN => [],
+          ModelAset::KATEGORI_BANGUNAN => []
+      ];
+
+      foreach ($asets as $aset) {
+        $this->db->select('*');
+        $this->db->where('id_aset', $aset['id_aset']);
+        switch ($aset['kategori_aset']) {
+          case ModelAset::KATEGORI_TANAH:
+            $this->db->from('aset_tanah');
+            $aset['detail'] = $this->db->get()->row_array();
+            $result[ModelAset::KATEGORI_TANAH][] = $aset;
+            break;
+          case ModelAset::KATEGORI_PERALATAN:
+            $this->db->from('aset_peralatan_mesin');
+            $aset['detail'] = $this->db->get()->row_array();
+            $result[ModelAset::KATEGORI_PERALATAN][] = $aset;
+            break;
+          case ModelAset::KATEGORI_BANGUNAN:
+            $this->db->from('aset_gedung_bangunan');
+            $aset['detail'] = $this->db->get()->row_array();
+            $result[ModelAset::KATEGORI_BANGUNAN][] = $aset;
+            break;
+        }
+      }
+
+      return $result;
     }
 }
 

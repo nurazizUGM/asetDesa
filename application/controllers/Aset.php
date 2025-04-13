@@ -656,6 +656,106 @@ class Aset extends CI_Controller
 
         redirect(base_url('aset_wujud'));
     }
+
+    public function export_excel(){
+      $asets = $this->ma->getAllAsetDetail();
+      $spreadsheet = new Spreadsheet();
+
+      $sheet = $spreadsheet->getActiveSheet();
+      $sheet->setTitle('Tanah');
+      $sheet->setCellValue('A1', 'No.');
+      $sheet->setCellValue('B1', 'Nama Aset');
+      $sheet->setCellValue('C1', 'Kode Aset');
+      $sheet->setCellValue('D1', 'Luas');
+      $sheet->setCellValue('E1', 'Alamat');
+      $sheet->setCellValue('F1', 'Tahun Pengadaan');
+      $sheet->setCellValue('G1', 'Kegunaan');
+      $sheet->setCellValue('H1', 'Koordinat');
+      $sheet->setCellValue('I1', 'Harga Per Meter');
+      $sheet->setCellValue('J1', 'Harga Total');
+      $sheet->setCellValue('K1', 'Harga Sewa Per Meter');
+      $sheet->setCellValue('L1', 'Harga Sewa Per Tahun');
+      $sheet->setCellValue('M1', 'Jarak Sumber Air');
+      $sheet->setCellValue('N1', 'Jarak Jalan Utama');
+
+      $row = 2;
+      foreach($asets[ModelAset::KATEGORI_TANAH] as $i=>$aset){
+        $sheet->setCellValue('A'.$row, $i+1);
+        $sheet->setCellValue('B'.$row, $aset['nama_aset']);
+        $sheet->setCellValue('C'.$row, $aset['kode_aset']);
+        $sheet->setCellValue('D'.$row, $aset['detail']['luas']);
+        $sheet->setCellValue('E'.$row, $aset['detail']['alamat']);
+        $sheet->setCellValue('F'.$row, $aset['tahun_pengadaan']);
+        $sheet->setCellValue('G'.$row, $aset['detail']['kegunaan']);
+        $sheet->setCellValue('H'.$row, $aset['detail']['latitude'].', '.$aset['detail']['longitude']);
+        $sheet->setCellValue('I'.$row, $aset['detail']['harga_satuan']);
+        $sheet->setCellValue('J'.$row, $aset['detail']['harga_total']);
+        $sheet->setCellValue('K'.$row, $aset['detail']['harga_sewa_satuan']);
+        $sheet->setCellValue('L'.$row, $aset['detail']['harga_sewa_total']);
+        $sheet->setCellValue('M'.$row, $aset['detail']['jarak_sumber_air']);
+        $sheet->setCellValue('N'.$row, $aset['detail']['jarak_jalan_utama']);
+        $row++;
+      }
+
+      $sheet = $spreadsheet->createSheet();
+      $sheet->setTitle('Peralatan dan Mesin');
+      $sheet->setCellValue('A1', 'No.');
+      $sheet->setCellValue('B1', 'Nama Aset');
+      $sheet->setCellValue('C1', 'Kode Aset');
+      $sheet->setCellValue('D1', 'Merk');
+      $sheet->setCellValue('E1', 'Bahan');
+      $sheet->setCellValue('F1', 'Tahun Pengadaan');
+      $sheet->setCellValue('G1', 'Perolehan');
+
+      $row = 2;
+      foreach($asets[ModelAset::KATEGORI_PERALATAN] as $i=>$aset){
+        $sheet->setCellValue('A'.$row, $i+1);
+        $sheet->setCellValue('B'.$row, $aset['nama_aset']);
+        $sheet->setCellValue('C'.$row, $aset['kode_aset']);
+        $sheet->setCellValue('D'.$row, $aset['detail']['merk']);
+        $sheet->setCellValue('E'.$row, $aset['detail']['bahan']);
+        $sheet->setCellValue('F'.$row, $aset['tahun_pengadaan']);
+        $sheet->setCellValue('G'.$row, $aset['detail']['perolehan']);
+        $row++;
+      }
+
+      $sheet = $spreadsheet->createSheet();
+      $sheet->setTitle('Gedung dan Bangunan');
+      $sheet->setCellValue('A1', 'No.');
+      $sheet->setCellValue('B1', 'Nama Aset');
+      $sheet->setCellValue('C1', 'Kode Aset');
+      $sheet->setCellValue('E1', 'Tahun Pengadaan');
+      $sheet->setCellValue('F1', 'Perolehan');
+
+      $row = 2;
+      foreach($asets[ModelAset::KATEGORI_BANGUNAN] as $i=>$aset){
+        $sheet->setCellValue('A'.$row, $i+1);
+        $sheet->setCellValue('B'.$row, $aset['nama_aset']);
+        $sheet->setCellValue('C'.$row, $aset['kode_aset']);
+        $sheet->setCellValue('D'.$row, $aset['detail']['perolehan']);
+        $sheet->setCellValue('E'.$row, $aset['tahun_pengadaan']);
+        $row++;
+      }
+
+      foreach (range('A', 'N') as $columnID) {
+          $spreadsheet->getSheetByName('Tanah')->getColumnDimension($columnID)->setAutoSize(true);
+          $spreadsheet->getSheetByName('Peralatan dan Mesin')->getColumnDimension($columnID)->setAutoSize(true);
+          $spreadsheet->getSheetByName('Gedung dan Bangunan')->getColumnDimension($columnID)->setAutoSize(true);
+      }
+
+      // save and download
+      $temp_file = tempnam(sys_get_temp_dir(), 'aset_desa_') . '.xlsx';
+      $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+      $writer->save($temp_file);
+      header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      header('Content-Disposition: attachment; filename="aset_desa_' . date('Ymd_His') . '.xlsx"');
+      header('Cache-Control: max-age=0');
+      header('Expires: 0');
+      header('Pragma: public');
+      readfile($temp_file);
+      unlink($temp_file);
+      exit;
+    }
 }
 
 /* End of file Aset.php */
