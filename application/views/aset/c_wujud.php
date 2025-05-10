@@ -107,6 +107,26 @@
                             </div>
                         </div>
                         <div class="form-group row" data-kategori="tanah">
+                            <label for="nilai_likuidasi" class="col-sm-2 col-form-label">Nilai likuidasi</label>
+                            <div class="col-sm-6">
+                                <input type="number" class="form-control" name="nilai_likuidasi">
+                            </div>
+                        </div>
+                        <div class="form-group row" data-kategori="tanah">
+                            <label for="tersedia" class="col-sm-2 col-form-label">Tersedia untuk disewakan</label>
+                            <div class="col-sm-6 d-flex align-items-center">
+                              <div class="iradio checked mr-1">
+                                <input type="radio" name="tersedia" id="tersedia[1]" value="0" checked>
+                              </div>
+                              <label for="tersedia[1]" class="mr-1 my-auto">Tidak Tersedia</label>
+
+                              <div class="iradio ml-2 mr-1">
+                                <input type="radio" name="tersedia" id="tersedia[2]" value="1">
+                              </div>
+                              <label for="tersedia[2]" class="mr-1 my-auto">Tersedia</label>
+                            </div>
+                        </div>
+                        <div class="form-group row" data-kategori="tanah">
                             <label for="harga_satuan" class="col-sm-2 col-form-label">Harga tanah per meter</label>
                             <div class="col-sm-6">
                                 <input type="number" class="form-control" name="harga_satuan">

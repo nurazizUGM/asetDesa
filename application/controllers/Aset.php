@@ -125,6 +125,8 @@ class Aset extends CI_Controller
                 $detail['kegunaan'] = $this->input->post('kegunaan');
                 $detail['latitude'] = $this->input->post('latitude');
                 $detail['longitude'] = $this->input->post('longitude');
+                $detail['nilai_likuidasi'] = $this->input->post('nilai_likuidasi');
+                $detail['tersedia'] = $this->input->post('tersedia');
                 $detail['harga_satuan'] = $this->input->post('harga_satuan');
                 $detail['harga_total'] = $this->input->post('harga_total');
                 $detail['harga_sewa_satuan'] = $this->input->post('harga_sewa_satuan');
@@ -229,6 +231,8 @@ class Aset extends CI_Controller
                 $detail['kegunaan'] = $this->input->post('kegunaan');
                 $detail['latitude'] = $this->input->post('latitude');
                 $detail['longitude'] = $this->input->post('longitude');
+                $detail['nilai_likuidasi'] = $this->input->post('nilai_likuidasi');
+                $detail['tersedia'] = $this->input->post('tersedia');
                 $detail['harga_satuan'] = $this->input->post('harga_satuan');
                 $detail['harga_total'] = $this->input->post('harga_total');
                 $detail['harga_sewa_satuan'] = $this->input->post('harga_sewa_satuan');
@@ -443,12 +447,14 @@ class Aset extends CI_Controller
                 $latitude = $longitude = null;
             }
 
-            $harga_satuan = $sheet->getCell("M" . $row)->getCalculatedValue();
-            $harga_total = $sheet->getCell("N" . $row)->getCalculatedValue();
-            $harga_sewa_satuan = $sheet->getCell("O" . $row)->getCalculatedValue();
-            $harga_sewa_total = $sheet->getCell("P" . $row)->getCalculatedValue();
-            $jarak_sumber_air = $sheet->getCell("Q" . $row)->getValue();
-            $jarak_jalan_utama = $sheet->getCell("R" . $row)->getValue();
+            $nilai_likuidasi = $sheet->getCell("M" . $row)->getCalculatedValue();
+            $harga_sewa_satuan = $sheet->getCell("N" . $row)->getCalculatedValue();
+            $harga_sewa_total = $sheet->getCell("O" . $row)->getCalculatedValue();
+            $tersedia = $sheet->getCell("P" . $row)->getValue();
+            $harga_satuan = $sheet->getCell("Q" . $row)->getCalculatedValue();
+            $harga_total = $sheet->getCell("R" . $row)->getCalculatedValue();
+            $jarak_sumber_air = $sheet->getCell("S" . $row)->getValue();
+            $jarak_jalan_utama = $sheet->getCell("T" . $row)->getValue();
 
             // Buat UUID untuk ID Aset
             $id_aset = str_replace('-', '', $this->uuid->v4());
@@ -484,6 +490,8 @@ class Aset extends CI_Controller
                 'kegunaan' => $kegunaan,
                 'latitude' => $latitude,
                 'longitude' => $longitude,
+                'nilai_likuidasi' => $nilai_likuidasi,
+                'tersedia' => trim(strtolower($tersedia)) === 'tersedia' ? 1 : 0,
                 'harga_satuan' => $harga_satuan,
                 'harga_total' => $harga_total,
                 'harga_sewa_satuan' => $harga_sewa_satuan,
@@ -581,7 +589,7 @@ class Aset extends CI_Controller
         $this->ciqrcode->initialize($config);
 
         $data = [];
-        $row = 8;
+        $row = 6;
         while (true) {
             $row++;
             if (!$sheet->getCell("A" . $row)->getValue()) {
@@ -674,12 +682,14 @@ class Aset extends CI_Controller
       $sheet->setCellValue('F1', 'Tahun Pengadaan');
       $sheet->setCellValue('G1', 'Kegunaan');
       $sheet->setCellValue('H1', 'Koordinat');
-      $sheet->setCellValue('I1', 'Harga Per Meter');
-      $sheet->setCellValue('J1', 'Harga Total');
-      $sheet->setCellValue('K1', 'Harga Sewa Per Meter');
-      $sheet->setCellValue('L1', 'Harga Sewa Per Tahun');
-      $sheet->setCellValue('M1', 'Jarak Sumber Air');
-      $sheet->setCellValue('N1', 'Jarak Jalan Utama');
+      $sheet->setCellValue('I1', 'Nilai Likuidasi');
+      $sheet->setCellValue('J1', 'Tersedia Untuk Disewakan');
+      $sheet->setCellValue('K1', 'Harga Per Meter');
+      $sheet->setCellValue('L1', 'Harga Total');
+      $sheet->setCellValue('M1', 'Harga Sewa Per Meter');
+      $sheet->setCellValue('N1', 'Harga Sewa Per Tahun');
+      $sheet->setCellValue('O1', 'Jarak Sumber Air');
+      $sheet->setCellValue('P1', 'Jarak Jalan Utama');
 
       $row = 2;
       foreach($asets[ModelAset::KATEGORI_TANAH] as $i=>$aset){
@@ -691,12 +701,14 @@ class Aset extends CI_Controller
         $sheet->setCellValue('F'.$row, $aset['tahun_pengadaan']);
         $sheet->setCellValue('G'.$row, $aset['detail']['kegunaan']);
         $sheet->setCellValue('H'.$row, $aset['detail']['latitude'].', '.$aset['detail']['longitude']);
-        $sheet->setCellValue('I'.$row, $aset['detail']['harga_satuan']);
-        $sheet->setCellValue('J'.$row, $aset['detail']['harga_total']);
-        $sheet->setCellValue('K'.$row, $aset['detail']['harga_sewa_satuan']);
-        $sheet->setCellValue('L'.$row, $aset['detail']['harga_sewa_total']);
-        $sheet->setCellValue('M'.$row, $aset['detail']['jarak_sumber_air']);
-        $sheet->setCellValue('N'.$row, $aset['detail']['jarak_jalan_utama']);
+        $sheet->setCellValue('I'.$row, $aset['detail']['nilai_likuidasi']);
+        $sheet->setCellValue('J'.$row, $aset['detail']['tersedia'] ? 'Tersedia' : 'Tidak Tersedia');
+        $sheet->setCellValue('K'.$row, $aset['detail']['harga_satuan']);
+        $sheet->setCellValue('L'.$row, $aset['detail']['harga_total']);
+        $sheet->setCellValue('M'.$row, $aset['detail']['harga_sewa_satuan']);
+        $sheet->setCellValue('N'.$row, $aset['detail']['harga_sewa_total']);
+        $sheet->setCellValue('O'.$row, $aset['detail']['jarak_sumber_air']);
+        $sheet->setCellValue('P'.$row, $aset['detail']['jarak_jalan_utama']);
         $row++;
       }
 

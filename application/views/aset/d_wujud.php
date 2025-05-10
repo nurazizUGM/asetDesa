@@ -93,7 +93,17 @@
                                 <td><?= $aset['detail']['longitude'] ?></td>
                             </tr>
                             <tr>
-                                <td>Harga Satuan</td>
+                                <td>Nilai Likuidasi</td>
+                                <td>:</td>
+                                <td><?= rupiah($aset['detail']['nilai_likuidasi']) ?></td>
+                            </tr>
+                            <tr>
+                                <td>Tersedia untuk disewakan</td>
+                                <td>:</td>
+                                <td><?= $aset['detail']['tersedia'] ? 'Tersedia' : 'Tidak Tersedia' ?></td>
+                            </tr>
+                            <tr>
+                                <td>Harga per m<sup>2</sup></td>
                                 <td>:</td>
                                 <td><?= rupiah($aset['detail']['harga_satuan']) ?></td>
                             </tr>
