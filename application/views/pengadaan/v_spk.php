@@ -224,7 +224,7 @@
                     $arr[] = $nilai.' yaitu V'.$no++.' dengan nama aset '.$row['nama_aset'];
                   } 
 
-                  $output = max($arr);
+                  $output = $arr ? max($arr) : 0;
 
                   echo "<p>Dari hasil perhitungan ranking diatas, maka pemilihan aset terbaik untuk pengadaan dengan nilai tertinggi ".$output;                
                 ?>
