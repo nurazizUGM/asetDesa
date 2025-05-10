@@ -65,6 +65,9 @@
                         <label for="fileExcel">Pilih File Excel</label>
                         <input type="file" name="fileExcel" class="form-control" required accept=".xls, .xlsx">
                     </div>
+                    <a href="<?=base_url('/src/template_aset.xlsx')?>" target="_blank" class="btn btn-info btn-sm">
+                        <i class="fas fa-download"></i> Download Template
+                    </a>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
