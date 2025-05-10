@@ -21,7 +21,7 @@ CREATE TABLE `asets` (
   UNIQUE KEY `kode_aset` (`kode_aset`),
   KEY `id_barang` (`nama_aset`),
   KEY `id_lokasi` (`nup_aset`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+);
 
 
 DROP TABLE IF EXISTS `aset_gedung_bangunan`;
@@ -30,7 +30,7 @@ CREATE TABLE `aset_gedung_bangunan` (
   `perolehan` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_aset`),
   CONSTRAINT `aset_gedung_bangunan_ibfk_1` FOREIGN KEY (`id_aset`) REFERENCES `asets` (`id_aset`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+);
 
 
 DROP TABLE IF EXISTS `aset_peralatan_mesin`;
@@ -41,7 +41,7 @@ CREATE TABLE `aset_peralatan_mesin` (
   `perolehan` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_aset`),
   CONSTRAINT `aset_peralatan_mesin_ibfk_1` FOREIGN KEY (`id_aset`) REFERENCES `asets` (`id_aset`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+);
 
 
 DROP TABLE IF EXISTS `aset_tanah`;
@@ -63,7 +63,7 @@ CREATE TABLE `aset_tanah` (
   `foto` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`id_aset`),
   CONSTRAINT `aset_tanah_ibfk_3` FOREIGN KEY (`id_aset`) REFERENCES `asets` (`id_aset`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+);
 
 
 DROP TABLE IF EXISTS `barang`;
@@ -76,7 +76,7 @@ CREATE TABLE `barang` (
   PRIMARY KEY (`id_barang`),
   KEY `id_jenis` (`id_kategori`),
   CONSTRAINT `barang_ibfk_1` FOREIGN KEY (`id_kategori`) REFERENCES `kategori_barang` (`id_kategori`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+);
 
 
 DROP TABLE IF EXISTS `data_aset`;
@@ -85,7 +85,7 @@ CREATE TABLE `data_aset` (
   `nama_aset` varchar(128) DEFAULT NULL,
   `harga` double DEFAULT NULL,
   PRIMARY KEY (`id_aset`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+);
 
 
 DROP TABLE IF EXISTS `kategori_barang`;
@@ -95,7 +95,7 @@ CREATE TABLE `kategori_barang` (
   `nama_kategori` varchar(128) DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id_kategori`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+);
 
 
 DROP TABLE IF EXISTS `keputusan_pengadaan`;
@@ -110,7 +110,7 @@ CREATE TABLE `keputusan_pengadaan` (
   KEY `id_aset` (`id_aset`),
   CONSTRAINT `keputusan_pengadaan_ibfk_1` FOREIGN KEY (`id_spesifikasi`) REFERENCES `kriteria_spesifikasi` (`id_spesifikasi`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `keputusan_pengadaan_ibfk_2` FOREIGN KEY (`id_kualitas`) REFERENCES `kriteria_kualitas` (`id_kualitas`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+);
 
 
 DROP TABLE IF EXISTS `kriteria_kualitas`;
@@ -119,7 +119,7 @@ CREATE TABLE `kriteria_kualitas` (
   `keterangan` varchar(128) DEFAULT NULL,
   `nilai` double DEFAULT NULL,
   PRIMARY KEY (`id_kualitas`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+);
 
 
 DROP TABLE IF EXISTS `kriteria_spesifikasi`;
@@ -128,7 +128,7 @@ CREATE TABLE `kriteria_spesifikasi` (
   `keterangan` varchar(128) DEFAULT NULL,
   `nilai` double DEFAULT NULL,
   PRIMARY KEY (`id_spesifikasi`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+);
 
 
 DROP TABLE IF EXISTS `lokasi_aset`;
@@ -137,7 +137,7 @@ CREATE TABLE `lokasi_aset` (
   `nama_lokasi` varchar(128) NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id_lokasi`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+);
 
 
 DROP TABLE IF EXISTS `monitoring_aset`;
@@ -155,7 +155,7 @@ CREATE TABLE `monitoring_aset` (
   PRIMARY KEY (`id_monitoring`),
   KEY `id_aset` (`id_aset`),
   CONSTRAINT `monitoring_aset_ibfk_1` FOREIGN KEY (`id_aset`) REFERENCES `asets` (`id_aset`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+);
 
 
 DROP TABLE IF EXISTS `pengadaan`;
@@ -172,7 +172,7 @@ CREATE TABLE `pengadaan` (
   PRIMARY KEY (`id_pengadaan`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `pengadaan_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+);
 
 
 DROP TABLE IF EXISTS `penghapusan`;
@@ -186,7 +186,7 @@ CREATE TABLE `penghapusan` (
   PRIMARY KEY (`id_penghapusan`),
   KEY `id_aset` (`id_aset`),
   CONSTRAINT `penghapusan_ibfk_1` FOREIGN KEY (`id_aset`) REFERENCES `asets` (`id_aset`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+);
 
 
 DROP TABLE IF EXISTS `users`;
@@ -199,7 +199,7 @@ CREATE TABLE `users` (
   `role` enum('1','2','3') DEFAULT NULL,
   `foto` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+);
 
 INSERT INTO `users` (`id_user`, `nama_user`, `username`, `password`, `jabatan`, `role`, `foto`) VALUES
 (1,	'Administrator',	'admin',	'21232f297a57a5a743894a0e4a801fc3',	'Administrator',	'1',	'1a8e897e32abe9537b1183c8e27611b8.png'),
